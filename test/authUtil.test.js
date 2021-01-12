@@ -74,7 +74,7 @@ describe('AuthUtil test', function () {
     describe('Create JWT', function () {
         it('create and verify jwt', function (done) {
             const header = {
-                "alg": "HS256",
+                "alg": "sha512",
                 "typ": "JWT"
             };
             const payload = {
@@ -95,7 +95,7 @@ describe('AuthUtil test', function () {
     describe('Read JWT', function () {
         it('read jwt into an object', function (done) {
             const header = {
-                "alg": "HS256",
+                "alg": "sha512",
                 "typ": "JWT"
             };
             const payload = {
@@ -105,7 +105,6 @@ describe('AuthUtil test', function () {
             };
             const secretKey = "my-secret-key";
             const jwt = authUtil.createJWT(header, payload, secretKey);
-            console.log(jwt);
             const jwtObject = authUtil.readJWT(jwt);
             assert.equal(JSON.stringify(jwtObject.header),
                 JSON.stringify(header), 'jwt not equal');
