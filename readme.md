@@ -40,7 +40,7 @@ createJWT(header, payload, key)
 verify JWT signatures -> returns true or false
 
 ```js
-createJWT(header, payload, key)
+verifySignatureJWT(jwt, key)
 ```
 
 read JWT -> return header and payload object minus signature

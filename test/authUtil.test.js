@@ -70,4 +70,25 @@ describe('AuthUtil test', function () {
             done();
         });
     });
+
+    describe('Create JWT', function () {
+        it('create and verify jwt', function (done) {
+            const header = {
+                "alg": "HS256",
+                "typ": "JWT"
+            };
+            const payload = {
+                "sub": "1234567890",
+                "name": "John Doe",
+                "iat": 1516239022
+            };
+            const secretKey = "my-secret-key";
+            const jwt = authUtil.createJWT(header, payload, secretKey);
+            const verified = authUtil.verifySignatureJWT(jwt, secretKey);
+            const unVerified = authUtil.verifySignatureJWT((jwt + 'she'), secretKey);
+            assert.equal(verified, true, 'jwt verified');
+            assert.equal(unVerified, false, 'jwt not verified');
+            done();
+        });
+    });
 });
