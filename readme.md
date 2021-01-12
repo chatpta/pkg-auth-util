@@ -31,7 +31,7 @@ Verify hash -> returns true or false
 verifyHashOfPassword(password, hashOfPassword)
 ```
 
-Create JWT -> returns jwt string
+Create JWT -> returns url safe jwt string
 
 ```js
 createJWT(header, payload, key)
