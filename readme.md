@@ -22,13 +22,13 @@ const authUtil = new AuthUtil(defaultValues);
 Creates hash of password -> returns string this string contains $algorithm.hash.salt
 
 ```js
-createPasswordHash(password, salt, algorithm)
+createPasswordHash(password, secretKey, algorithm, outputType)
 ```
 
 Verify hash -> returns true or false
 
 ```js
-verifyHashOfPassword(password, hashOfPassword)
+verifyPasswordHash(password, passwordHash, secretKey)
 ```
 
 Create JWT -> returns url safe jwt string

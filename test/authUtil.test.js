@@ -40,7 +40,19 @@ describe('AuthUtil test', function () {
             const base64String = authUtil.asciiToBase64(myString);
             const urlSafeString = authUtil.makeStringUrlSafe(base64String);
             const reversedUrlSafeString = authUtil.reverseStringUrlSafe(urlSafeString);
-            assert.equal(base64String, reversedUrlSafeString , 'both are not same');
+            assert.equal(base64String, reversedUrlSafeString, 'both are not same');
+            done();
+        });
+    });
+
+    describe('Create and verify password hash', function () {
+        it('create and verify password', function (done) {
+            const password = "my secret password";
+            const passwordHash = authUtil.createPasswordHash(password);
+            const verified = authUtil.verifyPasswordHash(password, passwordHash);
+            console.log(passwordHash);
+            console.log(verified);
+            // assert.equal(base64String, reversedUrlSafeString , 'both are not same');
             done();
         });
     });
