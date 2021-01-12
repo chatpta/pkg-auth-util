@@ -45,20 +45,28 @@ describe('AuthUtil test', function () {
         });
     });
 
-    describe('Create and verify password hash', function () {
-        it('create and verify password', function (done) {
-            const password = "my secret password";
+    describe('Create and split password hash', function () {
+        it('create and split password', function (done) {
+            const password = "password";
             const salt = authUtil.createRandomSalt(new Date().valueOf().toString());
             const passwordHash = authUtil.createPasswordHash(password, salt);
             const decomposedHash = authUtil.decomposePasswordHash(passwordHash);
+            assert.equal(decomposedHash.algorithm, defaultValues.defaultAlgorithm, 'algorithm are not same');
+            assert.equal(decomposedHash.salt, salt, 'salt are not same');
+            done();
+        });
+    });
 
-
-
+    describe('Create and verify password hash', function () {
+        it('create and verify password', function (done) {
+            const password = "my secret password";
+            const badPassword = "bad password";
+            const salt = authUtil.createRandomSalt(new Date().valueOf().toString());
+            const passwordHash = authUtil.createPasswordHash(password, salt);
             const verified = authUtil.verifyPasswordHash(password, passwordHash);
-            console.log(passwordHash);
-            console.log(decomposedHash);
-            console.log(verified);
-            // assert.equal(base64String, reversedUrlSafeString , 'both are not same');
+            const unVerified = authUtil.verifyPasswordHash(badPassword, passwordHash);
+            assert.equal(verified, true, 'both passwords are not same');
+            assert.equal(unVerified, false, 'both passwords are same');
             done();
         });
     });
