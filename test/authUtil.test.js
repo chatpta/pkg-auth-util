@@ -91,4 +91,24 @@ describe('AuthUtil test', function () {
             done();
         });
     });
+
+    describe('Read JWT', function () {
+        it('read jwt into an object', function (done) {
+            const header = {
+                "alg": "HS256",
+                "typ": "JWT"
+            };
+            const payload = {
+                "sub": "1234567890",
+                "name": "John Doe",
+                "iat": 1516239022
+            };
+            const secretKey = "my-secret-key";
+            const jwt = authUtil.createJWT(header, payload, secretKey);
+            const jwtObject = authUtil.readJWT(jwt);
+            assert.equal(JSON.stringify(jwtObject.header),
+                JSON.stringify(header), 'jwt not equal');
+            done();
+        });
+    });
 });

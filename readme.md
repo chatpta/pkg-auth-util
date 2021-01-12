@@ -43,7 +43,7 @@ verify JWT signatures -> returns true or false
 verifySignatureJWT(jwt, key)
 ```
 
-read JWT -> return header and payload object minus signature
+read JWT -> return object containing header, payload, signature
 
 ```js
 readJWT(jwt)
