@@ -3,7 +3,12 @@ const assert = require('assert').strict;
 
 
 describe('AuthUtil test', function () {
-    const authUtil = new AuthUtil('sha512', 'dev-secret', 'base64');
+    const defaultValues = {
+        defaultAlgorithm: 'sha512',
+        defaultSecret: 'dev-secret',
+        defaultOutputType: 'base64'
+    };
+    const authUtil = new AuthUtil(defaultValues);
 
     describe('Create random salt', function () {
         it('creates a random salt string', function (done) {
