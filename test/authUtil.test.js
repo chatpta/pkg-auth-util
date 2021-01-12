@@ -48,9 +48,15 @@ describe('AuthUtil test', function () {
     describe('Create and verify password hash', function () {
         it('create and verify password', function (done) {
             const password = "my secret password";
-            const passwordHash = authUtil.createPasswordHash(password);
+            const salt = authUtil.createRandomSalt(new Date().valueOf().toString());
+            const passwordHash = authUtil.createPasswordHash(password, salt);
+            const decomposedHash = authUtil.decomposePasswordHash(passwordHash);
+
+
+
             const verified = authUtil.verifyPasswordHash(password, passwordHash);
             console.log(passwordHash);
+            console.log(decomposedHash);
             console.log(verified);
             // assert.equal(base64String, reversedUrlSafeString , 'both are not same');
             done();
