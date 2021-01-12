@@ -105,6 +105,7 @@ describe('AuthUtil test', function () {
             };
             const secretKey = "my-secret-key";
             const jwt = authUtil.createJWT(header, payload, secretKey);
+            console.log(jwt);
             const jwtObject = authUtil.readJWT(jwt);
             assert.equal(JSON.stringify(jwtObject.header),
                 JSON.stringify(header), 'jwt not equal');
