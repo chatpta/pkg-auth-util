@@ -19,7 +19,7 @@ const authUtil = new AuthUtil(defaultValues);
 
 ```
 
-Creates hash of password -> returns string
+Creates hash of password -> returns string this string contains $algorithm.hash.salt
 
 ```js
 createPasswordHash(password, salt, algorithm)

@@ -11,9 +11,36 @@ describe('AuthUtil test', function () {
     const authUtil = new AuthUtil(defaultValues);
 
     describe('Create random salt', function () {
+        it('create the hash of string', function (done) {
+            const test_hash = authUtil.createHmacString("some data to hash");
+            assert.ok(test_hash, 'Hash not created');
+            done();
+        });
+
         it('creates a random salt string', function (done) {
             const salt = authUtil.createRandomSalt(new Date().valueOf().toString());
             assert.ok(salt, 'Salt is not created');
+            done();
+        });
+    });
+
+    describe('Encode and decode base64 string', function () {
+        it('encode base64 string and reverse', function (done) {
+            const myString = "some data to hash";
+            const base64String = authUtil.asciiToBase64(myString);
+            const unCodedString = authUtil.base64ToAscii(base64String);
+            assert.equal(myString, unCodedString, 'both are not same');
+            done();
+        });
+    });
+
+    describe('Url safe and reverse url save', function () {
+        it('url safe and reverse', function (done) {
+            const myString = "some data to hash and some more";
+            const base64String = authUtil.asciiToBase64(myString);
+            const urlSafeString = authUtil.makeStringUrlSafe(base64String);
+            const reversedUrlSafeString = authUtil.reverseStringUrlSafe(urlSafeString);
+            assert.equal(base64String, reversedUrlSafeString , 'both are not same');
             done();
         });
     });
