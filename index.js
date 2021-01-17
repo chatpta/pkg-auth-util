@@ -1,6 +1,6 @@
 module.exports = {
-    AuthUtil: require('./lib/AuthUtil'),
-    JwtCreator: require('./lib/jwtCreator'),
-    JwtReader: require('./lib/jwtReader'),
-    Hash: require('./lib/hash')
+    AuthUtil: require('./lib/util/AuthUtil'),
+    JwtCreator: require('./lib/util/jwtCreator'),
+    JwtReader: require('./lib/util/jwtReader'),
+    Hash: require('./lib/util/hash')
 }

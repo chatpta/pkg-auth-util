@@ -1,5 +1,5 @@
 const assert = require('assert').strict;
-const index = require('../index');
+const index = require('../../index');
 
 
 describe('AuthUtil test', function () {
