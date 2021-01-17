@@ -8,10 +8,7 @@ const defaultValues = {
 };
 
 const middleware = new index.Middleware();
-// const jwtReader = new index.JwtReader(defaultValues);
-// const jwtCreator = new index.JwtCreator(defaultValues);
 const hash = new index.Hash(defaultValues);
-// const validata = new index.Validate();
 
 
 describe('Middleware tests', () => {
