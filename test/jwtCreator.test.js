@@ -59,4 +59,21 @@ describe('JwtCreator test', function () {
         });
     });
 
+    describe('jwtCreateSHA512 good input', function () {
+        it('test true results of jwt create', function (done) {
+            const header = {};
+            const payload = {
+                "sub": "1234567890",
+                "name": "John Doe",
+                "time": Date.now()
+            };
+            const secretKey = "my-secret-key";
+            const jwt = jwtCreator.jwtCreateSHA512(header, payload, secretKey);
+            const decryptedJWT = jwtReader.jwtRead(jwt);
+            assert.ok(jwtReader.jwtIsSignatureValid(jwt, secretKey), 'Signature not valid');
+            assert.ok(jwtReader.jwtIsExpired(jwt, 1), 'Jwt is expired');
+            assert.deepStrictEqual(decryptedJWT.payload.time, payload.time, 'Time is not same');
+            done();
+        });
+    });
 });
