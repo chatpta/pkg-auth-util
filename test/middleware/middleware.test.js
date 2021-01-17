@@ -197,4 +197,14 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test verifyIncomingJwtTokenSignature', () => {
+        it('good jwt should pass', async () => {
+            req = {
+                signatureVerifiedJwtToken: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
+            };
+            await middleware.readReqSignatureVerifiedJwtTokenAttachToReqUser(req, res, nextFunc);
+            assert.deepStrictEqual(req.user.payload.user_id, 123456789, 'jwt too small');
+        });
+    });
+
 });
