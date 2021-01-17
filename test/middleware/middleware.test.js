@@ -207,4 +207,13 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test function sendPasswordUpdatedReply', () => {
+        it('sends update reply', async () => {
+            req.user = {updated: true};
+            await middleware.sendPasswordUpdatedReply(req, res, nextFunc);
+            assert.deepStrictEqual(res.body.message, 'update successful',
+                'not returning message');
+        });
+    });
+
 });
