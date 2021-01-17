@@ -21,11 +21,6 @@ describe('Middleware tests', () => {
         json: (obj) => res.body = obj
     };
     let req;
-
-    // incomingUser: {
-    //     email: "validUsernamePassTest@gmail.com",
-    //     password: "secre*77pass"
-    // }
     beforeEach(() => {
         req = {};
     });
@@ -60,6 +55,28 @@ describe('Middleware tests', () => {
             await middleware.createJwtTokenSHA512(req, req, nextFunc);
             await middleware.sendJwtInReply(req, res, nextFunc);
             assert.ok((res.body.jwt.length > 100), 'not returning jwt');
+        });
+    });
+
+    describe('test function validatePasswordInReqBodyPassword', () => {
+        it('validatePassword', async () => {
+            req = {
+                body: {
+                    password: "secre*77newpass"
+                }
+            };
+            await middleware.validatePasswordInReqBodyPassword(req, res, nextFunc);
+            assert.ok(req.incomingUser.password.length > 5, 'Problem in validatePassword');
+        });
+
+        it('validatePassword should fail', async () => {
+            req = {
+                body: {
+                    password: "bad pass"
+                }
+            };
+            await middleware.validatePasswordInReqBodyPassword(req, res, nextFunc);
+            assert.ok(!req.incomingUser.password, 'Should be problem in validatePassword');
         });
     });
 
@@ -110,27 +127,6 @@ describe('Middleware tests', () => {
     //         'Problem in validateEmail');
     // });
     //
-    // it('validatePassword', async () => {
-    //     req = {
-    //         body: {
-    //             password: "secre*77newpass"
-    //         }
-    //     };
-    //     await middleware.validatePassword(req, res, nextFunc);
-    //     assert.ok(!!req.incomingUser.password,
-    //         'Problem in validatePassword');
-    // });
-    //
-    // it('validatePassword should fail', async () => {
-    //     req = {
-    //         body: {
-    //             password: "bad pass"
-    //         }
-    //     };
-    //     await middleware.validatePassword(req, res, nextFunc);
-    //     assert.ok(!req.incomingUser,
-    //         'Problem in validatePassword');
-    // });
 
     // it('simulate forget', async () => {
     //     req = {
