@@ -3,6 +3,6 @@ module.exports = {
     JwtCreator: require('./lib/util/jwtCreator'),
     JwtReader: require('./lib/util/jwtReader'),
     Hash: require('./lib/util/hash'),
-    Middleware: require('./lib/middleware/middleware'),
-    Validate: require('./lib/validate/validate')
+    Validate: require('./lib/validate/validate'),
+    Auth: require('./lib/middleware/middleware')
 }
