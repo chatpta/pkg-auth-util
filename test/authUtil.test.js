@@ -1,5 +1,5 @@
-const AuthUtil = require('../lib/AuthUtil');
 const assert = require('assert').strict;
+const index = require('../index');
 
 
 describe('AuthUtil test', function () {
@@ -8,7 +8,7 @@ describe('AuthUtil test', function () {
         defaultSecret: 'dev-secret',
         defaultOutputType: 'base64'
     };
-    const authUtil = new AuthUtil(defaultValues);
+    const authUtil = new index.AuthUtil(defaultValues);
 
     describe('Create random salt', function () {
         it('create the hash of string', function (done) {

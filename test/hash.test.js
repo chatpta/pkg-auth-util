@@ -1,5 +1,5 @@
 const assert = require('assert').strict;
-const HashCreate = require('../lib/hashCreate');
+const index = require('../index');
 
 
 describe('HashCreator test', function () {
@@ -9,11 +9,11 @@ describe('HashCreator test', function () {
         defaultOutputType: 'base64'
     };
 
-    const hashCreate = new HashCreate(defaultValues);
+    const hash = new index.Hash(defaultValues);
 
     describe('createRandomSalt', function () {
         it('creates random salt', function (done) {
-            const salt = hashCreate.createRandomSalt();
+            const salt = hash.createRandomSalt();
             assert.ok(salt.length > 39);
             done();
         });
@@ -21,8 +21,8 @@ describe('HashCreator test', function () {
 
     describe('createHmacString', function () {
         it('creates hmac string', async function () {
-            const salt = await hashCreate.createRandomSalt();
-            const hmac = await hashCreate.createHmacString(salt);
+            const salt = await hash.createRandomSalt();
+            const hmac = await hash.createHmacString(salt);
             assert.ok(hmac.length > 39);
         });
     });
@@ -30,8 +30,8 @@ describe('HashCreator test', function () {
     describe('createPasswordHashStoreString', function () {
         it('creates hash string to store', async function () {
             const password = "my-secret-password";
-            const salt = await hashCreate.createRandomSalt();
-            const storeHashString = hashCreate.createPasswordHashStoreString(password, salt);
+            const salt = await hash.createRandomSalt();
+            const storeHashString = hash.createPasswordHashStoreString(password, salt);
             assert.ok(storeHashString.length > 139);
         });
     });
@@ -39,9 +39,9 @@ describe('HashCreator test', function () {
     describe('verifyPasswordHash good input', function () {
         it('verifies hash against string to store', async function () {
             const password = "my-secret-password";
-            const salt = await hashCreate.createRandomSalt();
-            const storeHashString = hashCreate.createPasswordHashStoreString(password, salt);
-            const verified = hashCreate.verifyPasswordHash(password, storeHashString);
+            const salt = await hash.createRandomSalt();
+            const storeHashString = hash.createPasswordHashStoreString(password, salt);
+            const verified = hash.verifyPasswordHash(password, storeHashString);
             assert.ok(verified);
         });
     });
@@ -50,9 +50,9 @@ describe('HashCreator test', function () {
         it('verifies hash against string to store', async function () {
             const password = "my-secret-password";
             const badPassword = "my-bad-password";
-            const salt = await hashCreate.createRandomSalt();
-            const storeHashString = hashCreate.createPasswordHashStoreString(password, salt);
-            const verified = hashCreate.verifyPasswordHash(badPassword, storeHashString);
+            const salt = await hash.createRandomSalt();
+            const storeHashString = hash.createPasswordHashStoreString(password, salt);
+            const verified = hash.verifyPasswordHash(badPassword, storeHashString);
             assert.ok(!verified);
         });
     });

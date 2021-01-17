@@ -1,7 +1,5 @@
-const AuthUtil = require('../lib/AuthUtil');
-const JwtCreator = require('../lib/jwtCreator');
-const JwtReader = require('../lib/jwtReader');
 const assert = require('assert').strict;
+const index = require('../index');
 
 
 describe('JwtCreator test', function () {
@@ -10,9 +8,9 @@ describe('JwtCreator test', function () {
         defaultSecret: 'dev-secret',
         defaultOutputType: 'base64'
     };
-    const authUtil = new AuthUtil(defaultValues);
-    const jwtCreator = new JwtCreator(defaultValues);
-    const jwtReader = new JwtReader(defaultValues);
+    const authUtil = new index.AuthUtil(defaultValues);
+    const jwtCreator = new index.JwtCreator(defaultValues);
+    const jwtReader = new index.JwtReader(defaultValues);
 
     describe('jwtCreate good input', function () {
         it('test true results of jwt create', function (done) {

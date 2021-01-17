@@ -1,6 +1,5 @@
 const assert = require('assert').strict;
-const AuthUtil = require('../lib/AuthUtil');
-const JwtReader = require('../lib/jwtReader');
+const index = require('../index');
 
 
 describe('JwtReader test', function () {
@@ -9,8 +8,8 @@ describe('JwtReader test', function () {
         defaultSecret: 'dev-secret',
         defaultOutputType: 'base64'
     };
-    const authUtil = new AuthUtil(defaultValues);
-    const jwtReader = new JwtReader(defaultValues);
+    const authUtil = new index.AuthUtil(defaultValues);
+    const jwtReader = new index.JwtReader(defaultValues);
 
     describe('jwtIsExpired', function () {
         it('create and verify jwt', function (done) {
