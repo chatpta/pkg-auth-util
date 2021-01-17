@@ -31,7 +31,7 @@ describe('Hash test', function () {
         it('creates hash string to store', async function () {
             const password = "my-secret-password";
             const salt = await hash.createRandomSalt();
-            const storeHashString = hash.createPasswordHashStoreString(password, salt);
+            const storeHashString = await hash.createPasswordHashStoreString(password, salt);
             assert.ok(storeHashString.length > 139);
         });
     });
@@ -51,8 +51,8 @@ describe('Hash test', function () {
             const password = "my-secret-password";
             const badPassword = "my-bad-password";
             const salt = await hash.createRandomSalt();
-            const storeHashString = hash.createPasswordHashStoreString(password, salt);
-            const verified = hash.verifyPasswordHash(badPassword, storeHashString);
+            const storeHashString = await hash.createPasswordHashStoreString(password, salt);
+            const verified = await hash.verifyPasswordHash(badPassword, storeHashString);
             assert.ok(!verified);
         });
     });

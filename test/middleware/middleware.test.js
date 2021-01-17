@@ -155,7 +155,7 @@ describe('Middleware tests', () => {
             assert.ok(!req.user, 'Should have failed');
         });
 
-        it('bad hash should pass', async () => {
+        it('good hash should pass', async () => {
             req = {
                 incomingUser: {
                     email: "validUsernamePassTest@gmail.com",
@@ -166,7 +166,7 @@ describe('Middleware tests', () => {
                     user_id: 123456788,
                 }
             };
-            req.databaseUser.hash = hash.createPasswordHashStoreString(req.incomingUser.password, hash.createRandomSalt());
+            req.databaseUser.hash = await hash.createPasswordHashStoreString(req.incomingUser.password, hash.createRandomSalt());
             await auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
             assert.ok(req.user, 'Should login');
         });
