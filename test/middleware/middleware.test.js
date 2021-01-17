@@ -80,6 +80,28 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test function validatePasswordInReqBodyPassword', () => {
+        it('valid Email', async () => {
+            req = {
+                body: {
+                    email: "validUsernamePassTest@gmail.com"
+                }
+            };
+            await middleware.validateEmailInReqBodyEmail(req, res, nextFunc);
+            assert.ok(req.incomingUser.email.length > 5, 'Problem in valid Email');
+        });
+
+        it('not valid Email', async () => {
+            req = {
+                body: {
+                    email: "validUsernamePassTestgmail.com"
+                }
+            };
+            await middleware.validateEmailInReqBodyEmail(req, res, nextFunc);
+            assert.ok(!req.incomingUser.email, 'Problem in not valid Email');
+        });
+    });
+
     //
     // it('create jwt test', async () => {
     //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
@@ -116,17 +138,6 @@ describe('Middleware tests', () => {
     //         'not returning jwt');
     // });
 
-    // it('validateEmail', async () => {
-    //     req = {
-    //         body: {
-    //             email: "validUsernamePassTest@gmail.com"
-    //         }
-    //     };
-    //     await middleware.validateEmail(req, res, nextFunc);
-    //     assert.ok(!!req.incomingUser,
-    //         'Problem in validateEmail');
-    // });
-    //
 
     // it('simulate forget', async () => {
     //     req = {
