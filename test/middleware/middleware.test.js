@@ -32,8 +32,8 @@ describe('Middleware tests', () => {
     describe('test function createHeaderPayloadForJwtFromReqUserSHA512', () => {
         it('create header', async () => {
             req.user = {user_id: 123456789};
-            await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
-            assert.ok(!!req.payload.user_id,
+            await middleware.createJwtHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            assert.ok(!!req.jwtPayload.user_id,
                 'user_id not there');
         });
     });
@@ -41,9 +41,9 @@ describe('Middleware tests', () => {
     describe('test function createJwtTokenSHA512', () => {
         it('create jwt token', async () => {
             req.user = {user_id: 123456789};
-            await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            await middleware.createJwtHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
             await middleware.createJwtTokenSHA512(req, req, nextFunc);
-            assert.ok(!req.payload, 'payload is not consumed');
+            assert.ok(!req.jwtPayload, 'payload is not consumed');
             assert.ok(req.jwtToken.length > 100, 'jwtToken not created');
         });
     });
@@ -51,7 +51,7 @@ describe('Middleware tests', () => {
     describe('test function sendJwtInReply', () => {
         it('sends jwt token', async () => {
             req.user = {user_id: 123456789};
-            await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            await middleware.createJwtHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
             await middleware.createJwtTokenSHA512(req, req, nextFunc);
             await middleware.sendJwtInReply(req, res, nextFunc);
             assert.ok((res.body.jwt.length > 100), 'not returning jwt');
@@ -175,19 +175,6 @@ describe('Middleware tests', () => {
         });
     });
 
-    describe('test function createJwtHeaderPayloadFromReqUser', () => {
-        it('create req.jwtHeader req.jwtPayload', async () => {
-            req = {
-                user: {
-                    email: "validUsernamePassTest@gmail.com",
-                    user_id: 123456788,
-                }
-            };
-            await middleware.createJwtHeaderPayloadFromReqUser(req, res, nextFunc);
-            assert.deepStrictEqual(req.jwtPayload.user_id, 123456788,
-                'Should have passed');
-        });
-    });
 
     //
     // it('create jwt test', async () => {
