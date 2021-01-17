@@ -2,7 +2,7 @@ const assert = require('assert').strict;
 const index = require('../index');
 
 
-describe('HashCreator test', function () {
+describe('Hash test', function () {
     const defaultValues = {
         defaultAlgorithm: 'sha512',
         defaultSecret: 'dev-secret',
