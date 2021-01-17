@@ -22,25 +22,38 @@ describe('Middleware tests', () => {
     };
     let req;
 
+    // incomingUser: {
+    //     email: "validUsernamePassTest@gmail.com",
+    //     password: "secre*77pass"
+    // }
     beforeEach(() => {
-        req = {
-            incomingUser: {
-                email: "validUsernamePassTest@gmail.com",
-                password: "secre*77pass"
-            }
-        };
+        req = {};
     });
 
     after(async () => {
 
     });
 
-    it('create header and payload test', async () => {
-        req.user = {user_id: 123456789};
-        await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
-        assert.ok(!!req.payload.user_id,
-            'user_id not there');
+    describe('test function createHeaderPayloadForJwtFromReqUserSHA512', () => {
+        it('create header', async () => {
+            req.user = {user_id: 123456789};
+            await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            assert.ok(!!req.payload.user_id,
+                'user_id not there');
+        });
     });
+
+    describe('test function createJwtTokenSHA512', () => {
+        it('create jwt token', async () => {
+            req.user = {user_id: 123456789};
+            await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            await middleware.createJwtTokenSHA512(req, req, nextFunc);
+            assert.ok(!req.payload, 'payload is not consumed');
+            assert.ok(req.jwtToken.length > 100, 'jwtToken not created');
+        });
+    });
+
+
     //
     // it('create jwt test', async () => {
     //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
