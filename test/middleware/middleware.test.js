@@ -18,7 +18,7 @@ describe('Middleware tests', () => {
     let nextFunc = function (req, res) {
     };
     let res = {
-        json: (obj) => JSON.stringify(obj)
+        json: (obj) => res.body = obj
     };
     let req;
 
@@ -53,6 +53,15 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test function sendJwtInReply', () => {
+        it('sends jwt token', async () => {
+            req.user = {user_id: 123456789};
+            await middleware.createHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            await middleware.createJwtTokenSHA512(req, req, nextFunc);
+            await middleware.sendJwtInReply(req, res, nextFunc);
+            assert.ok((res.body.jwt.length > 100), 'not returning jwt');
+        });
+    });
 
     //
     // it('create jwt test', async () => {
