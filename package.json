@@ -16,5 +16,8 @@
   "license": "ISC",
   "devDependencies": {
     "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "@petercraftsmn/validate": "^1.0.5"
   }
 }
