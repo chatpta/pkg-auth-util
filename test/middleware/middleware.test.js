@@ -175,6 +175,20 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test function createJwtHeaderPayloadFromReqUser', () => {
+        it('create req.jwtHeader req.jwtPayload', async () => {
+            req = {
+                user: {
+                    email: "validUsernamePassTest@gmail.com",
+                    user_id: 123456788,
+                }
+            };
+            await middleware.createJwtHeaderPayloadFromReqUser(req, res, nextFunc);
+            assert.deepStrictEqual(req.jwtPayload.user_id, 123456788,
+                'Should have passed');
+        });
+    });
+
     //
     // it('create jwt test', async () => {
     //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
