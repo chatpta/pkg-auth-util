@@ -10,7 +10,7 @@ const defaultValues = {
 const middleware = new index.Middleware();
 // const jwtReader = new index.JwtReader(defaultValues);
 // const jwtCreator = new index.JwtCreator(defaultValues);
-// const hash = new index.Hash(defaultValues);
+const hash = new index.Hash(defaultValues);
 // const validata = new index.Validate();
 
 
@@ -138,6 +138,40 @@ describe('Middleware tests', () => {
             await middleware.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
             assert.ok(!req.databaseUser.email, 'Problem in email');
             assert.ok(req.user.email, 'Problem in email');
+        });
+    });
+
+    describe('test function loginUserUsingReqIncomingUserReqDatabaseUser', () => {
+        it('bad hash should fail', async () => {
+            req = {
+                incomingUser: {
+                    email: "validUsernamePassTest@gmail.com",
+                    password: "secre*77newpass"
+                },
+                databaseUser: {
+                    email: "validUsernamePassTest@gmail.com",
+                    user_id: 123456788,
+                    hash: "somethisnf827273shseoe"
+                }
+            };
+            await middleware.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
+            assert.ok(!req.user, 'Should have failed');
+        });
+
+        it('bad hash should pass', async () => {
+            req = {
+                incomingUser: {
+                    email: "validUsernamePassTest@gmail.com",
+                    password: "secre*77newpass"
+                },
+                databaseUser: {
+                    email: "validUsernamePassTest@gmail.com",
+                    user_id: 123456788,
+                }
+            };
+            req.databaseUser.hash = hash.createPasswordHashStoreString(req.incomingUser.password, hash.createRandomSalt());
+            await middleware.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
+            assert.ok(req.user, 'Should login');
         });
     });
 
