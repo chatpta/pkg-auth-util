@@ -102,6 +102,45 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test function email password move to req.user from req.databaseUser', () => {
+        it('move user_id', async () => {
+            req = {
+                databaseUser: {
+                    email: "validUsernamePassTest@gmail.com",
+                    user_id: 123456788,
+                    hash: "somethisnf827273shseoe"
+                }
+            };
+            await middleware.moveReqDatabaseUserIdToReqUserId(req, res, nextFunc);
+            assert.ok(!req.databaseUser.user_id, 'Problem in user_id');
+            assert.ok(req.user.user_id, 'Problem in user_id');
+        });
+
+        it('move email', async () => {
+            req = {
+                databaseUser: {
+                    email: "validUsernamePassTest@gmail.com",
+                    user_id: 123456788,
+                    hash: "somethisnf827273shseoe"
+                }
+            };
+            await middleware.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
+            assert.ok(!req.databaseUser.email, 'Problem in email');
+            assert.ok(req.user.email, 'Problem in email');
+        });
+
+        it('move email problem', async () => {
+            req = {
+                databaseUser: {
+                    email: "validUsernamePassTest@gmail.com"
+                }
+            };
+            await middleware.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
+            assert.ok(!req.databaseUser.email, 'Problem in email');
+            assert.ok(req.user.email, 'Problem in email');
+        });
+    });
+
     //
     // it('create jwt test', async () => {
     //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
