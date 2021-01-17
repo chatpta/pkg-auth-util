@@ -175,89 +175,16 @@ describe('Middleware tests', () => {
         });
     });
 
-
-    //
-    // it('create jwt test', async () => {
-    //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
-    //     await middleware.validateUserForForgotPassword(req, res, nextFunc);
-    //     await middleware.createHeaderPayloadForJwt(req, res, nextFunc);
-    //     await authMiddleware.createJwtToken(req, res, nextFunc);
-    //     assert.ok(req.jwtToken.length > 50,
-    //         'Jwt is smaller than 50 characters');
-    // });
-    //
-    // it('send jwt test', async () => {
-    //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
-    //     await middleware.createHeaderPayloadForJwt(req, res, nextFunc);
-    //     await authMiddleware.createJwtToken(req, res, nextFunc);
-    //     await middleware.sendJwtInReply(req, res, nextFunc);
-    //     assert.ok((typeof res.json === "function"),
-    //         'not returning jwt');
-    // });
-    //
-    // it('simulate login', async () => {
-    //     req = {
-    //         body: {
-    //             email: "validUsernamePassTest@gmail.com",
-    //             password: "secre*77pass"
-    //         }
-    //     };
-    //     await authMiddleware.validateUsernamePassword(req, res, nextFunc);
-    //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
-    //     await authMiddleware.verifyUserForLogin(req, res, nextFunc);
-    //     await middleware.createHeaderPayloadForJwt(req, res, nextFunc);
-    //     await authMiddleware.createJwtToken(req, res, nextFunc);
-    //     await middleware.sendJwtInReply(req, res, nextFunc);
-    //     assert.ok((typeof res.json === "function"),
-    //         'not returning jwt');
-    // });
-
-
-    // it('simulate forget', async () => {
-    //     req = {
-    //         body: {
-    //             email: "validUsernamePassTest@gmail.com"
-    //         }
-    //     };
-    //     await middleware.validateEmail(req, res, nextFunc);
-    //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
-    //     await middleware.validateUserForForgotPassword(req, res, nextFunc);
-    //     await middleware.createHeaderPayloadForJwt(req, res, nextFunc);
-    //     await authMiddleware.createJwtToken(req, res, nextFunc);
-    //     await middleware.emailLinkForPasswordRecovery(req, res, nextFunc);
-    //     assert.ok((typeof res.json === "function"),
-    //         'not returning jwt');
-    // });
-    //
-    // it('simulate reset/:jwt', async () => {
-    //     req = {
-    //         body: {
-    //             email: "validUsernamePassTest@gmail.com"
-    //         }
-    //     };
-    //     await middleware.validateEmail(req, res, nextFunc);
-    //     await userController.findUserAndAttachToRequest(req, res, nextFunc);
-    //     await middleware.validateUserForForgotPassword(req, res, nextFunc);
-    //     await middleware.createHeaderPayloadForJwt(req, res, nextFunc);
-    //     await authMiddleware.createJwtToken(req, res, nextFunc);
-    //     // We get new jwt for recovery
-    //     req = {
-    //         params: {
-    //             jwt: req.jwtToken
-    //         },
-    //         body: {
-    //             password: "secre*77newpass"
-    //         }
-    //     };
-    //     await middleware.parseJwtFromUrlAndAttachToReq(req, res, nextFunc);
-    //     await middleware.verifyIncomingJwtTokenSignature(req, res, nextFunc);
-    //     await authMiddleware.parseJwtToken(req, res, nextFunc);
-    //     await middleware.validatePassword(req, res, nextFunc);
-    //     await userController.updateUserHash(req, res, nextFunc);
-    //     await middleware.sendPasswordUpdatedReply(req, res, nextFunc);
-    //     assert.ok((typeof res.json === "function"),
-    //         'not returning jwt');
-    // });
-    //
+    describe('test parseJwtFromUrlParamJwtAndAttachToReq', () => {
+        it('bad hash should fail', async () => {
+            req = {
+                params: {
+                    jwt: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
+                },
+            };
+            await middleware.parseJwtFromUrlParamJwtAndAttachToReq(req, res, nextFunc);
+            assert.ok(req.recoveryJwtToken.length > 100, 'jwt too small');
+        });
+    });
 
 });
