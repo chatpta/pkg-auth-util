@@ -14,10 +14,6 @@ describe('Middleware tests', () => {
         req = {};
     });
 
-    after(async () => {
-
-    });
-
     describe('test function createHeaderPayloadForJwtFromReqUserSHA512', () => {
         it('create header', (done) => {
             req.user = {user_id: 123456789};
@@ -125,17 +121,6 @@ describe('Middleware tests', () => {
                     email: "validUsernamePassTest@gmail.com",
                     user_id: 123456788,
                     hash: "somethisnf827273shseoe"
-                }
-            };
-            await auth.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
-            assert.ok(!req.databaseUser.email, 'Problem in email');
-            assert.ok(req.user.email, 'Problem in email');
-        });
-
-        it('move email problem', async () => {
-            req = {
-                databaseUser: {
-                    email: "validUsernamePassTest@gmail.com"
                 }
             };
             await auth.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
