@@ -3,7 +3,7 @@ const index = require('../../index');
 
 
 describe('JwtCreator test', function () {
-    const auth = new index.Auth();
+    const auth = new index.JwtReader();
 
     describe('jwtCreate good input', function () {
         it('test true results of jwt create', function (done) {

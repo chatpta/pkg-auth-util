@@ -4,7 +4,7 @@ const index = require('../../index');
 
 describe('Hash test', function () {
 
-    const auth = new index.Auth();
+    const auth = new index.Hash();
 
     describe('createRandomSalt', function () {
         it('creates random salt', function (done) {
