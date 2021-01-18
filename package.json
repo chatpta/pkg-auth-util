@@ -1,6 +1,6 @@
 {
   "name": "@petercraftsmn/auth-util",
-  "version": "2.1.2",
+  "version": "2.1.5",
   "repository": "https://github.com/petercraftsmn/auth-util",
   "description": "Auth utility functions",
   "main": "index.js",
