@@ -55,6 +55,28 @@ describe('Middleware tests', () => {
         });
     });
 
+    describe('test function validateEmailInReqBodyEmail', () => {
+        it('valid Email', async () => {
+            req = {
+                body: {
+                    email: "validUsernamePassTest@gmail.com"
+                }
+            };
+            await auth.validateEmailInReqBodyEmail(req, res, nextFunc);
+            assert.ok(req.incomingUser.email.length > 5, 'Problem in valid Email');
+        });
+
+        it('not valid Email', async () => {
+            req = {
+                body: {
+                    email: "validUsernamePassTestgmail.com"
+                }
+            };
+            await auth.validateEmailInReqBodyEmail(req, res, nextFunc);
+            assert.ok(!req.incomingUser.email, 'Problem in not valid Email');
+        });
+    });
+
     describe('test function validatePasswordInReqBodyPassword', () => {
         it('validatePassword', async () => {
             req = {
@@ -77,26 +99,17 @@ describe('Middleware tests', () => {
         });
     });
 
-    describe('test function validatePasswordInReqBodyPassword', () => {
-        it('valid Email', async () => {
+    describe('test function createIncomingUserHash', () => {
+        it('create hash', async () => {
             req = {
-                body: {
-                    email: "validUsernamePassTest@gmail.com"
+                incomingUser: {
+                    password: "secre*77newpass"
                 }
             };
-            await auth.validateEmailInReqBodyEmail(req, res, nextFunc);
-            assert.ok(req.incomingUser.email.length > 5, 'Problem in valid Email');
+            await auth.createIncomingUserHash(req, res, nextFunc);
+            assert.ok(req.incomingUser.hash.length > 100, 'Problem in hash creation');
         });
 
-        it('not valid Email', async () => {
-            req = {
-                body: {
-                    email: "validUsernamePassTestgmail.com"
-                }
-            };
-            await auth.validateEmailInReqBodyEmail(req, res, nextFunc);
-            assert.ok(!req.incomingUser.email, 'Problem in not valid Email');
-        });
     });
 
     describe('test function email password move to req.user from req.databaseUser', () => {
