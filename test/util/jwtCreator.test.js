@@ -67,4 +67,21 @@ describe('JwtCreator test', function () {
             done();
         });
     });
+
+    describe('headerPayloadUrlSafeStringCreate good input', function () {
+        it('test url safe string', function (done) {
+            const header = {
+                "alg": "sha512",
+                "typ": "JWT"
+            };
+            const payload = {
+                "sub": "1234567890",
+                "name": "John Doe",
+                "time": Date.now()
+            };
+            const headerPayloadUrlSafe = auth.headerPayloadUrlSafeStringCreate(header, payload);
+            assert.ok(headerPayloadUrlSafe.length > 100, 'Time is not same');
+            done();
+        });
+    });
 });
