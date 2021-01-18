@@ -2,8 +2,9 @@ const assert = require('assert');
 const index = require('../../index');
 
 const util = new index.JwtReader();
+const commonUtil = index.CommonUtil;
 const validate = index.Validate;
-const auth = index.Middleware(util, validate);
+const auth = index.Middleware(util,commonUtil, validate);
 
 describe('Middleware tests', () => {
     let nextFunc = function (req, res) {
@@ -161,6 +162,7 @@ describe('Middleware tests', () => {
                 }
             };
             req.databaseUser.hash = util.createPasswordHashStoreString(req.incomingUser.password, util.createRandomSalt());
+            auth.createIncomingUserHashForLogin(req, res, nextFunc);
             auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
             assert.ok(req.user, 'Should login');
         });
