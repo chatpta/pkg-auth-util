@@ -19,11 +19,12 @@ describe('Middleware tests', () => {
     });
 
     describe('test function createHeaderPayloadForJwtFromReqUserSHA512', () => {
-        it('create header', async () => {
+        it('create header', (done) => {
             req.user = {user_id: 123456789};
-            await auth.createJwtHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
+            auth.createJwtHeaderPayloadForJwtFromReqUserSHA512(req, res, nextFunc);
             assert.ok(!!req.jwtPayload.user_id,
                 'user_id not there');
+            done();
         });
     });
 
