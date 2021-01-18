@@ -45,64 +45,65 @@ describe('Middleware tests', () => {
     });
 
     describe('test function validateEmailInReqBodyEmail', () => {
-        it('valid Email', async () => {
+        it('valid Email', (done) => {
             req = {
                 body: {
                     email: "validUsernamePassTest@gmail.com"
                 }
             };
-            await auth.validateEmailInReqBodyEmail(req, res, nextFunc);
+            auth.validateEmailInReqBodyEmail(req, res, nextFunc);
             assert.ok(req.incomingUser.email.length > 5, 'Problem in valid Email');
+            done();
         });
 
-        it('not valid Email', async () => {
+        it('not valid Email', () => {
             req = {
                 body: {
                     email: "validUsernamePassTestgmail.com"
                 }
             };
-            await auth.validateEmailInReqBodyEmail(req, res, nextFunc);
+            auth.validateEmailInReqBodyEmail(req, res, nextFunc);
             assert.ok(!req.incomingUser.email, 'Problem in not valid Email');
         });
     });
 
     describe('test function validatePasswordInReqBodyPassword', () => {
-        it('validatePassword', async () => {
+        it('validatePassword', () => {
             req = {
                 body: {
                     password: "secre*77newpass"
                 }
             };
-            await auth.validatePasswordInReqBodyPassword(req, res, nextFunc);
+            auth.validatePasswordInReqBodyPassword(req, res, nextFunc);
             assert.ok(req.incomingUser.password.length > 5, 'Problem in validatePassword');
         });
 
-        it('validatePassword should fail', async () => {
+        it('validatePassword should fail', () => {
             req = {
                 body: {
                     password: "bad pass"
                 }
             };
-            await auth.validatePasswordInReqBodyPassword(req, res, nextFunc);
+            auth.validatePasswordInReqBodyPassword(req, res, nextFunc);
             assert.ok(!req.incomingUser.password, 'Should be problem in validatePassword');
         });
     });
 
     describe('test function createIncomingUserHash', () => {
-        it('create hash', async () => {
+        it('create hash', () => {
             req = {
                 incomingUser: {
                     password: "secre*77newpass"
                 }
             };
-            await auth.createIncomingUserHash(req, res, nextFunc);
+            auth.createIncomingUserHash(req, res, nextFunc);
             assert.ok(req.incomingUser.hash.length > 100, 'Problem in hash creation');
         });
 
     });
 
     describe('test function email password move to req.user from req.databaseUser', () => {
-        it('move user_id', async () => {
+        it('move user_id', () => {
             req = {
                 databaseUser: {
                     email: "validUsernamePassTest@gmail.com",
@@ -110,12 +111,12 @@ describe('Middleware tests', () => {
                     hash: "somethisnf827273shseoe"
                 }
             };
-            await auth.moveReqDatabaseUserIdToReqUserId(req, res, nextFunc);
+            auth.moveReqDatabaseUserIdToReqUserId(req, res, nextFunc);
             assert.ok(!req.databaseUser.user_id, 'Problem in user_id');
             assert.ok(req.user.user_id, 'Problem in user_id');
         });
 
-        it('move email', async () => {
+        it('move email', () => {
             req = {
                 databaseUser: {
                     email: "validUsernamePassTest@gmail.com",
@@ -123,14 +124,14 @@ describe('Middleware tests', () => {
                     hash: "somethisnf827273shseoe"
                 }
             };
-            await auth.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
+            auth.moveReqDatabaseUserEmailToReqUserEmail(req, res, nextFunc);
             assert.ok(!req.databaseUser.email, 'Problem in email');
             assert.ok(req.user.email, 'Problem in email');
         });
     });
 
     describe('test function loginUserUsingReqIncomingUserReqDatabaseUser', () => {
-        it('bad hash should fail', async () => {
+        it('bad hash should fail', () => {
             req = {
                 incomingUser: {
                     email: "validUsernamePassTest@gmail.com",
@@ -142,11 +143,11 @@ describe('Middleware tests', () => {
                     hash: "somethisnf827273shseoe"
                 }
             };
-            await auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
+            auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
             assert.ok(!req.user, 'Should have failed');
         });
 
-        it('good hash should pass', async () => {
+        it('good hash should pass', () => {
             req = {
                 incomingUser: {
                     email: "validUsernamePassTest@gmail.com",
@@ -157,48 +158,48 @@ describe('Middleware tests', () => {
                     user_id: 123456788,
                 }
             };
-            req.databaseUser.hash = await auth.createPasswordHashStoreString(req.incomingUser.password, auth.createRandomSalt());
-            await auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
+            req.databaseUser.hash = auth.createPasswordHashStoreString(req.incomingUser.password, auth.createRandomSalt());
+            auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
             assert.ok(req.user, 'Should login');
         });
     });
 
     describe('test parseJwtFromUrlParamJwtAndAttachToReq', () => {
-        it('good jwt should pass', async () => {
+        it('good jwt should pass', () => {
             req = {
                 params: {
                     jwt: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
                 },
             };
-            await auth.parseJwtFromUrlParamJwtAndAttachToReq(req, res, nextFunc);
+            auth.parseJwtFromUrlParamJwtAndAttachToReq(req, res, nextFunc);
             assert.ok(req.recoveryJwtToken.length > 100, 'jwt too small');
         });
     });
 
     describe('test verifyIncomingJwtTokenSignature', () => {
-        it('good jwt should pass', async () => {
+        it('good jwt should pass', () => {
             req = {
                 recoveryJwtToken: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
             };
-            await auth.verifyIncomingJwtTokenSignature(req, res, nextFunc);
+            auth.verifyIncomingJwtTokenSignature(req, res, nextFunc);
             assert.ok(!!req.signatureVerifiedJwtToken, 'jwt too small');
         });
     });
 
     describe('test verifyIncomingJwtTokenSignature', () => {
-        it('good jwt should pass', async () => {
+        it('good jwt should pass', () => {
             req = {
                 signatureVerifiedJwtToken: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
             };
-            await auth.readReqSignatureVerifiedJwtTokenAttachToReqUser(req, res, nextFunc);
+            auth.readReqSignatureVerifiedJwtTokenAttachToReqUser(req, res, nextFunc);
             assert.deepStrictEqual(req.user.payload.user_id, 123456789, 'jwt too small');
         });
     });
 
     describe('test function sendPasswordUpdatedReply', () => {
-        it('sends update reply', async () => {
+        it('sends update reply', () => {
             req.user = {updated: true};
-            await auth.sendPasswordUpdatedReply(req, res, nextFunc);
+            auth.sendPasswordUpdatedReply(req, res, nextFunc);
             assert.deepStrictEqual(res.body.message, 'update successful',
                 'not returning message');
         });
