@@ -9,7 +9,7 @@ describe('JwtReader test', function () {
         defaultOutputType: 'base64'
     };
     const authUtil = new index.AuthUtil(defaultValues);
-    const jwtReader = new index.JwtReader(defaultValues);
+    const auth = new index.Auth();
 
     describe('jwtIsExpired', function () {
         it('create and verify jwt', function (done) {
@@ -28,8 +28,8 @@ describe('JwtReader test', function () {
             const secretKey = "my-secret-key";
             const jwtFresh = authUtil.createJWT(header, payload, secretKey);
             const jwtOld = authUtil.createJWT(header, payloadOld, secretKey);
-            const validNew = jwtReader.jwtIsExpired(jwtFresh, 60);
-            const validOld = jwtReader.jwtIsExpired(jwtOld, 60);
+            const validNew = auth.jwtIsExpired(jwtFresh, 60);
+            const validOld = auth.jwtIsExpired(jwtOld, 60);
             assert.equal(validNew, true, 'jwt verified');
             assert.equal(validOld, false, 'jwt not verified');
             done();
@@ -48,8 +48,8 @@ describe('JwtReader test', function () {
             };
             const secretKey = "my-secret-key";
             const jwt = authUtil.createJWT(header, payload, secretKey);
-            const verified = jwtReader.jwtIsSignatureValid(jwt, secretKey);
-            const unVerified = jwtReader.jwtIsSignatureValid((jwt + 'she'), secretKey);
+            const verified = auth.jwtIsSignatureValid(jwt, secretKey);
+            const unVerified = auth.jwtIsSignatureValid((jwt + 'she'), secretKey);
             assert.equal(verified, true, 'jwt verified');
             assert.equal(unVerified, false, 'jwt not verified');
             done();
@@ -68,7 +68,7 @@ describe('JwtReader test', function () {
             };
             const secretKey = "my-secret-key";
             const jwt = authUtil.createJWT(header, payload, secretKey);
-            const jwtObject = jwtReader.jwtRead(jwt);
+            const jwtObject = auth.jwtRead(jwt);
             assert.equal(JSON.stringify(jwtObject.header),
                 JSON.stringify(header), 'jwt not equal');
             done();

@@ -1,15 +1,7 @@
 const assert = require('assert');
 const index = require('../../index');
 
-const defaultValues = {
-    defaultAlgorithm: 'sha512',
-    defaultSecret: 'dev-secret',
-    defaultOutputType: 'base64'
-};
-
-const hash = new index.Hash(defaultValues);
-const auth = new index.Auth(defaultValues);
-
+const auth = new index.Auth();
 
 describe('Middleware tests', () => {
     let nextFunc = function (req, res) {
@@ -179,7 +171,7 @@ describe('Middleware tests', () => {
                     user_id: 123456788,
                 }
             };
-            req.databaseUser.hash = await hash.createPasswordHashStoreString(req.incomingUser.password, hash.createRandomSalt());
+            req.databaseUser.hash = await auth.createPasswordHashStoreString(req.incomingUser.password, auth.createRandomSalt());
             await auth.loginUserUsingReqIncomingUserReqDatabaseUser(req, res, nextFunc);
             assert.ok(req.user, 'Should login');
         });

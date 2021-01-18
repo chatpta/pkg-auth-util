@@ -3,14 +3,7 @@ const index = require('../../index');
 
 
 describe('JwtCreator test', function () {
-    const defaultValues = {
-        defaultAlgorithm: 'sha512',
-        defaultSecret: 'dev-secret',
-        defaultOutputType: 'base64'
-    };
-    const authUtil = new index.AuthUtil(defaultValues);
-    const jwtCreator = new index.JwtCreator(defaultValues);
-    const jwtReader = new index.JwtReader(defaultValues);
+    const auth = new index.Auth();
 
     describe('jwtCreate good input', function () {
         it('test true results of jwt create', function (done) {
@@ -24,10 +17,10 @@ describe('JwtCreator test', function () {
                 "time": Date.now()
             };
             const secretKey = "my-secret-key";
-            const jwt = jwtCreator.jwtCreate(header, payload, secretKey);
-            const decryptedJWT = jwtReader.jwtRead(jwt);
-            assert.ok(jwtReader.jwtIsSignatureValid(jwt, secretKey), 'Signature not valid');
-            assert.ok(jwtReader.jwtIsExpired(jwt, 1), 'Jwt is expired');
+            const jwt = auth.jwtCreate(header, payload, secretKey);
+            const decryptedJWT = auth.jwtRead(jwt);
+            assert.ok(auth.jwtIsSignatureValid(jwt, secretKey), 'Signature not valid');
+            assert.ok(auth.jwtIsExpired(jwt, 1), 'Jwt is expired');
             assert.deepStrictEqual(decryptedJWT.payload.time, payload.time, 'Time is not same');
             done();
         });
@@ -45,13 +38,13 @@ describe('JwtCreator test', function () {
                 "time": (Date.now() - 2000)
             };
             const secretKey = "my-secret-key";
-            const jwt = jwtCreator.jwtCreate(header, payload, secretKey);
+            const jwt = auth.jwtCreate(header, payload, secretKey);
             const jwtTempered = 'eyJhbGciOiJzaGE1MTILCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidGltZSI6MTYxMDg0MTIyNTc4Nn0.146t2ctokZasu0g7InTYhYzq3_R2RbRvZevIHbPXTCP_BbP7NX31xxuDPXFdD2tQgtJLi15IrQHx80j7gHrHbQ';
-            const verifiedTemperedJWT = jwtReader.jwtIsSignatureValid(jwtTempered, secretKey);
+            const verifiedTemperedJWT = auth.jwtIsSignatureValid(jwtTempered, secretKey);
             assert.ok(!verifiedTemperedJWT);
-            const jwtExpired = jwtReader.jwtIsExpired(jwt, 1);
+            const jwtExpired = auth.jwtIsExpired(jwt, 1);
             assert.ok(!jwtExpired, 'jwtIsExpired');
-            const jwtDecrypted = jwtReader.jwtRead(jwtTempered);
+            const jwtDecrypted = auth.jwtRead(jwtTempered);
             assert.ok(!jwtDecrypted, 'return value is not null');
             done();
         });
@@ -66,10 +59,10 @@ describe('JwtCreator test', function () {
                 "time": Date.now()
             };
             const secretKey = "my-secret-key";
-            const jwt = jwtCreator.jwtCreateSHA512(header, payload, secretKey);
-            const decryptedJWT = jwtReader.jwtRead(jwt);
-            assert.ok(jwtReader.jwtIsSignatureValid(jwt, secretKey), 'Signature not valid');
-            assert.ok(jwtReader.jwtIsExpired(jwt, 1), 'Jwt is expired');
+            const jwt = auth.jwtCreateSHA512(header, payload, secretKey);
+            const decryptedJWT = auth.jwtRead(jwt);
+            assert.ok(auth.jwtIsSignatureValid(jwt, secretKey), 'Signature not valid');
+            assert.ok(auth.jwtIsExpired(jwt, 1), 'Jwt is expired');
             assert.deepStrictEqual(decryptedJWT.payload.time, payload.time, 'Time is not same');
             done();
         });
