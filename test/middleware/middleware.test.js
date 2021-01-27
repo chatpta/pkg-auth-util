@@ -176,14 +176,14 @@ describe('Middleware tests', () => {
                 },
             };
             auth.parseJwtFromUrlParamJwtAndAttachToReq(req, res, nextFunc);
-            assert.ok(req.recoveryJwtToken.length > 100, 'jwt too small');
+            assert.ok(req.incomingJwtToken.length > 100, 'jwt too small');
         });
     });
 
     describe('test verifyIncomingJwtTokenSignature', () => {
         it('good jwt should pass', () => {
             req = {
-                recoveryJwtToken: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
+                incomingJwtToken: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
             };
             auth.verifyIncomingJwtTokenSignature(req, res, nextFunc);
             assert.ok(!!req.signatureVerifiedJwtToken, 'jwt too small');
