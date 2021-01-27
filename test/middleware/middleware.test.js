@@ -4,7 +4,7 @@ const index = require('../../index');
 const util = new index.JwtReader();
 const commonUtil = index.CommonUtil;
 const validate = index.Validate;
-const auth = index.Middleware(util,commonUtil, validate);
+const auth = index.Middleware(util, commonUtil, validate);
 
 describe('Middleware tests', () => {
     let nextFunc = function (req, res) {
@@ -231,6 +231,21 @@ describe('Middleware tests', () => {
             auth.sendPasswordUpdatedReply(req, res, nextFunc);
             assert.deepStrictEqual(res.body.message, 'update successful',
                 'not returning message');
+        });
+    });
+
+    describe('test parseJwtFromAuthenticationHeaderAndAttachToReq', () => {
+        const token = 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA';
+
+        it('good jwt should pass', () => {
+            req = {
+                authorization: 'bearer ' + token,
+                get(attr) {
+                    return this[attr]
+                }
+            };
+            auth.parseJwtFromAuthenticationHeaderAndAttachToReq(req, res, nextFunc);
+            assert.deepStrictEqual(req.incomingJwtToken, token);
         });
     });
 
