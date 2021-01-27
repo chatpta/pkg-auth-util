@@ -66,7 +66,7 @@ describe('Middleware tests', () => {
                 }
             };
             auth.validateEmailInReqBodyEmail(req, res, nextFunc);
-            assert.ok(!req.incomingUser.email, 'Problem in not valid Email');
+            assert.deepStrictEqual(req.error.place, 'validateEmailInReqBodyEmail');
         });
     });
 
@@ -88,7 +88,7 @@ describe('Middleware tests', () => {
                 }
             };
             auth.validatePasswordInReqBodyPassword(req, res, nextFunc);
-            assert.ok(!req.incomingUser.password, 'Should be problem in validatePassword');
+            assert.deepStrictEqual(req.error.place, "validatePasswordInReqBodyPassword");
         });
     });
 
