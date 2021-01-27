@@ -17,6 +17,19 @@ describe('Middleware tests', () => {
         req = {};
     });
 
+    describe('test function initializeAllVariablesInReq', () => {
+        it('initialize all to null', (done) => {
+            req.user = {user_id: 123456789};
+            auth.initializeAllVariablesInReq(req, res, nextFunc);
+            assert.deepStrictEqual(req.error, null);
+            assert.deepStrictEqual(req.user, null);
+            assert.deepStrictEqual(req.incomingUser, null);
+            assert.deepStrictEqual(req.jwtToken, null);
+            assert.deepStrictEqual(req.jwtPayload, null);
+            done();
+        });
+    });
+
     describe('test function createHeaderPayloadForJwtFromReqUserSHA512', () => {
         it('create header', (done) => {
             req.user = {user_id: 123456789};
@@ -176,6 +189,18 @@ describe('Middleware tests', () => {
                 },
             };
             auth.parseJwtFromUrlParamJwtAndAttachToReq(req, res, nextFunc);
+            assert.ok(req.incomingJwtToken.length > 100, 'jwt too small');
+        });
+    });
+
+    describe('test parseJwtFromBodyAndAttachToReq', () => {
+        it('good jwt should pass', () => {
+            req = {
+                body: {
+                    jwt: 'eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjoxMjM0NTY3ODksInRpbWUiOjE2MTA5MDU4ODE2NDB9.BxfZhC8VtFqdMFJlPizianLpxS4D5UIyKphylTaEgJECF2kfLcIEgiOvvhqc7NmiLFQnFpqXvRShCVinSWe7vA',
+                },
+            };
+            auth.parseJwtFromBodyAndAttachToReq(req, res, nextFunc);
             assert.ok(req.incomingJwtToken.length > 100, 'jwt too small');
         });
     });
