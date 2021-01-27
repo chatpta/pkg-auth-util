@@ -68,6 +68,23 @@ describe('JwtCreator test', function () {
         });
     });
 
+    describe('jwtCreateFromPayloadSHA512 good input', function () {
+        it('test true results of jwt create', function (done) {
+            const payload = {
+                "sub": "1234567890",
+                "name": "John Doe",
+                "time": Date.now()
+            };
+            const secretKey = "my-secret-key";
+            const jwt = auth.jwtCreateFromPayloadSHA512(payload, secretKey);
+            const decryptedJWT = auth.jwtRead(jwt);
+            assert.ok(auth.jwtIsSignatureValid(jwt, secretKey), 'Signature not valid');
+            assert.ok(auth.jwtIsExpired(jwt, 1), 'Jwt is expired');
+            assert.deepStrictEqual(decryptedJWT.payload.time, payload.time, 'Time is not same');
+            done();
+        });
+    });
+
     describe('headerPayloadUrlSafeStringCreate good input', function () {
         it('test url safe string', function (done) {
             const header = {
