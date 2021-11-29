@@ -46,4 +46,28 @@ describe( 'CryptoUtilAuth test', function () {
 
         assert.deepStrictEqual( randomSalt.length, 44 );
     } );
+
+    it( 'encryptStringAsciiToBase64 returns  base 64 and encrypted string', function () {
+        const plainTextString = 'This is some text for encryption';
+        const encryptedString = "juggjf+C81QzXvqa8qE1GHTbrMQydtoFszKw2kFjGDduCpXwS01cVnYyYl9an7l7";
+        const salt = 'my salt';
+        const secret = 'top secret';
+        const algorithm = 'aes-192-cbc';
+
+        const encryptedText = cryptoUtilAuth.encryptStringAsciiToBase64( plainTextString, salt, secret, algorithm );
+
+        assert.deepStrictEqual( encryptedText, encryptedString );
+    } );
+
+    it( 'decryptStringBase64ToAscii returns ascii string', function () {
+        const encryptedString = "juggjf+C81QzXvqa8qE1GHTbrMQydtoFszKw2kFjGDduCpXwS01cVnYyYl9an7l7";
+        const plainTextString = 'This is some text for encryption';
+        const salt = 'my salt';
+        const secret = 'top secret';
+        const algorithm = 'aes-192-cbc';
+
+        const encryptedText = cryptoUtilAuth.decryptStringBase64ToAscii( encryptedString, salt, secret, algorithm );
+
+        assert.deepStrictEqual( encryptedText, plainTextString );
+    } );
 } );
