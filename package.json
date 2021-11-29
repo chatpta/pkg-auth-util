@@ -1,7 +1,7 @@
 {
-  "name": "@petercraftsmn/auth-util",
-  "version": "2.1.6",
-  "repository": "https://github.com/petercraftsmn/auth-util",
+  "name": "@chatpta/auth-util",
+  "version": "1.0.0",
+  "repository": "https://github.com/chatpta/auth-util",
   "description": "Auth utility functions",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "utility",
     "cryptology"
   ],
-  "author": "Peter Craftsmn",
+  "author": "Chatpta team",
   "license": "ISC",
   "devDependencies": {
     "mocha": "^9.1.3"
