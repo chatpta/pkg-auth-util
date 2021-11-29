@@ -52,4 +52,17 @@ describe( 'ProcessJwt test', function () {
         assert.deepStrictEqual( expectedObject, returnedObject );
         done();
     } );
+
+    it( 'dotConnectedStringToAlgorithmHashSalt split at . returns object', function ( done ) {
+        const inputString = "c2hhNTEy.eyJhbGciOiJzaG.OiJzaGE1MTIiL";
+        const expectedObject = {
+            header: 'c2hhNTEy',
+            payload: 'eyJhbGciOiJzaG',
+            signature: 'OiJzaGE1MTIiL'
+        };
+
+        const returnedObject = processJwt.dotConnectedStringToHeaderPayloadSignature( inputString );
+        assert.deepStrictEqual( expectedObject, returnedObject );
+        done();
+    } );
 } );
