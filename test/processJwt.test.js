@@ -4,12 +4,21 @@ const { processJwt } = require( '../index' );
 
 
 describe( 'ProcessJwt test', function () {
-    it( 'fromUrlSafeToBase64Jwt when called with url safe jwt returns base64 string', function ( done ) {
-        const urlSafeJwt = "eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJpZCI6IjEyMzQ1Njc4OTAiLCJ0aW1lIjoxNjM4MjE0MDc0MDIzfQ.2t8UToQ6J-sIHUNH5XADFbdErSFeG8WEGj0FfR4YVnsQxnLJeDECtsNdj3IrMag2sNEEqqeuemycm1N70FrvHw";
-        const base64Jwt = "";
+    it( 'makeStringUrlSafe returns url safe string', function ( done ) {
+        const urlUnsafeString = "eyJhbGciOiJzaGE1MTIiL/CJ0e+XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz===";
+        const urlSafeString   = "eyJhbGciOiJzaGE1MTIiL_CJ0e-XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz";
 
-        // const returnedBase64Jwt = processJwt.fromUrlSafeToBase64Jwt( urlSafeJwt );
-        // assert.deepStrictEqual( returnedBase64Jwt, base64Jwt );
+        const returnedString = processJwt.makeStringUrlSafe( urlUnsafeString );
+        assert.deepStrictEqual( returnedString, urlSafeString );
+        done();
+    } );
+
+    it( 'reverseStringUrlSafe returns url safe string', function ( done ) {
+        const urlSafeString   = "eyJhbGciOiJzaGE1MTIiL_CJ0e-XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz";
+        const urlUnsafeString = "eyJhbGciOiJzaGE1MTIiL/CJ0e+XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz===";
+
+        const returnedString = processJwt.reverseStringUrlSafe( urlSafeString );
+        assert.deepStrictEqual( returnedString, urlUnsafeString );
         done();
     } );
 } );
