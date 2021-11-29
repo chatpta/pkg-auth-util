@@ -40,4 +40,10 @@ describe( 'CryptoUtilAuth test', function () {
 
         assert.deepStrictEqual( returnedHmacBase64, expectedHmacBase64 );
     } );
+
+    it( 'createSaltBase64 returns random base 64 string', function () {
+        const randomSalt = cryptoUtilAuth.createSaltBase64();
+
+        assert.deepStrictEqual( randomSalt.length, 44 );
+    } );
 } );
