@@ -6,5 +6,6 @@ module.exports = {
     JwtCreator: require( './lib/util/jwtCreator' ),
     JwtReader: require( './lib/util/jwtReader' ),
     Middleware: require( './lib/middleware/middleware' ),
-    processJwt: require( './lib/stringUtilAuth' )
+    stringUtilAuth: require( './lib/stringUtilAuth' ),
+    cryptoUtilAuth: require( './lib/cryptoUtilAuth' )
 }

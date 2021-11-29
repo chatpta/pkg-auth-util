@@ -1,6 +1,6 @@
 const assert = require( 'assert' ).strict;
 const { describe, it } = require( 'mocha' );
-const { processJwt } = require( '../index' );
+const { stringUtilAuth } = require( '../index' );
 
 
 describe( 'ProcessJwt test', function () {
@@ -8,7 +8,7 @@ describe( 'ProcessJwt test', function () {
         const urlUnsafeString = "eyJhbGciOiJzaGE1MTIiL/CJ0e+XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz===";
         const urlSafeString = "eyJhbGciOiJzaGE1MTIiL_CJ0e-XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz";
 
-        const returnedString = processJwt.makeStringUrlSafe( urlUnsafeString );
+        const returnedString = stringUtilAuth.makeStringUrlSafe( urlUnsafeString );
         assert.deepStrictEqual( returnedString, urlSafeString );
         done();
     } );
@@ -17,7 +17,7 @@ describe( 'ProcessJwt test', function () {
         const urlSafeString = "eyJhbGciOiJzaGE1MTIiL_CJ0e-XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz";
         const urlUnsafeString = "eyJhbGciOiJzaGE1MTIiL/CJ0e+XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz===";
 
-        const returnedString = processJwt.reverseStringUrlSafe( urlSafeString );
+        const returnedString = stringUtilAuth.reverseStringUrlSafe( urlSafeString );
         assert.deepStrictEqual( returnedString, urlUnsafeString );
         done();
     } );
@@ -26,7 +26,7 @@ describe( 'ProcessJwt test', function () {
         const asciiString = "How are you";
         const base64String = "SG93IGFyZSB5b3U=";
 
-        const returnedString = processJwt.asciiToBase64( asciiString );
+        const returnedString = stringUtilAuth.asciiToBase64( asciiString );
         assert.deepStrictEqual( returnedString, base64String );
         done();
     } );
@@ -35,7 +35,7 @@ describe( 'ProcessJwt test', function () {
         const base64String = "SG93IGFyZSB5b3U=";
         const asciiString = "How are you";
 
-        const returnedString = processJwt.base64ToAscii( base64String );
+        const returnedString = stringUtilAuth.base64ToAscii( base64String );
         assert.deepStrictEqual( returnedString, asciiString );
         done();
     } );
@@ -48,7 +48,7 @@ describe( 'ProcessJwt test', function () {
             salt: 'OiJzaGE1MTIiL'
         };
 
-        const returnedObject = processJwt.dotConnectedStringToAlgorithmHashSalt( inputString );
+        const returnedObject = stringUtilAuth.dotConnectedStringToAlgorithmHashSalt( inputString );
         assert.deepStrictEqual( expectedObject, returnedObject );
         done();
     } );
@@ -61,7 +61,7 @@ describe( 'ProcessJwt test', function () {
             signature: 'OiJzaGE1MTIiL'
         };
 
-        const returnedObject = processJwt.dotConnectedStringToHeaderPayloadSignature( inputString );
+        const returnedObject = stringUtilAuth.dotConnectedStringToHeaderPayloadSignature( inputString );
         assert.deepStrictEqual( expectedObject, returnedObject );
         done();
     } );
