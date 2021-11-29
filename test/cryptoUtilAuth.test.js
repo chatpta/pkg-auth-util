@@ -29,4 +29,15 @@ describe( 'CryptoUtilAuth test', function () {
         assert.deepStrictEqual( returnedValue, expectedValueTrue );
         assert.deepStrictEqual( returnedValueFalse, expectedValueFalse );
     } );
+
+    it( 'createHmacBase64 returns base 64 hmac', function () {
+        const algorithm = 'SHA256';
+        const token = "Hi I am token";
+        const secret = "My secret";
+        const expectedHmacBase64 = "IpOkaPa1YPTXQYPr6adIGk3ACgeqWyV+nvB4+7Ox4Dg=";
+
+        const returnedHmacBase64 = cryptoUtilAuth.createHmacBase64( token, secret, algorithm );
+
+        assert.deepStrictEqual( returnedHmacBase64, expectedHmacBase64 );
+    } );
 } );
