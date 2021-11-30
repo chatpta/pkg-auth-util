@@ -40,20 +40,21 @@ describe( 'ProcessJwt test', function () {
         done();
     } );
 
-    it( 'dotConnectedStringToAlgorithmHashSalt split at . returns object', function ( done ) {
-        const inputString = "c2hhNTEy.eyJhbGciOiJzaG.OiJzaGE1MTIiL";
+    it( 'dollarSignConnectedStringToAlgorithmHashSalt split at $ returns object', function ( done ) {
+        const inputHash = "$1$c2hhNTEy$eyJhbGciOiJzaG$OiJzaGE1MTIiL$";
         const expectedObject = {
-            algorithm: 'c2hhNTEy',
+            version: "1",
+            alg: 'c2hhNTEy',
             hash: 'eyJhbGciOiJzaG',
             salt: 'OiJzaGE1MTIiL'
         };
 
-        const returnedObject = stringUtilAuth.dotConnectedStringToAlgorithmHashSalt( inputString );
-        assert.deepStrictEqual( expectedObject, returnedObject );
+        const returnedObject = stringUtilAuth.dollarSignConnectedStringToAlgorithmHashSalt( inputHash );
+        assert.deepStrictEqual( returnedObject, expectedObject );
         done();
     } );
 
-    it( 'dotConnectedStringToAlgorithmHashSalt split at . returns object', function ( done ) {
+    it( 'dotConnectedStringToHeaderPayloadSignature split at . returns object', function ( done ) {
         const inputString = "c2hhNTEy.eyJhbGciOiJzaG.OiJzaGE1MTIiL";
         const expectedObject = {
             header: 'c2hhNTEy',
