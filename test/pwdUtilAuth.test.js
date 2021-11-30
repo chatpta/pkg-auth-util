@@ -35,4 +35,24 @@ describe( 'PwdUtilAuth test', function () {
 
         assert.deepStrictEqual( hash, expectedHash );
     } );
+
+    it( 'createPasswordHashWithRandomSalt called with save hash', function () {
+        const password = "mySecretPassword";
+        const secret = 'bigSecret';
+        const algorithm = 'sha512';
+
+        const hash = pwdUtilAuth.createPasswordHashWithRandomSalt( password, secret, algorithm );
+
+        assert.deepStrictEqual( hash.length > 40, true );
+    } );
+
+    it( 'createPasswordHashBasedOnSavedAlgorithmSalt called with saved hash', function () {
+        const savedHash = "$1$c2hhNTEy$SOk/04Wn/ce1YIXHlUIqt5SgsuCCLIFjxpzHloVSxFh/z8JuLFshAaGNCkIRf47QSPCOJpkJ476N2eq1Yg1+yg==$6h29BnpUkqfrmtnY1xUrAGZcpcAl5cUEJ4Qjj+BGXbo=$";
+        const password = "mySecretPassword";
+        const secret = 'bigSecret';
+
+        const hash = pwdUtilAuth.createPasswordHashBasedOnSavedAlgorithmSalt( password, savedHash, secret );
+
+        assert.deepStrictEqual( hash, savedHash );
+    } );
 } );
