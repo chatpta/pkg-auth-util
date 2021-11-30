@@ -6,5 +6,6 @@ module.exports = {
     JwtReader: require( './lib/util/jwtReader' ),
     Middleware: require( './lib/middleware/middleware' ),
     stringUtilAuth: require( './lib/stringUtilAuth' ),
-    cryptoUtilAuth: require( './lib/cryptoUtilAuth' )
+    cryptoUtilAuth: require( './lib/cryptoUtilAuth' ),
+    jwtUtilAuth: require( './lib/jwtUtilAuth' )
 }
