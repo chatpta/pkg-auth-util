@@ -11,7 +11,7 @@ describe( 'JwtUtilAuth test', function () {
         const signature = "-DprLrW2OyqiAFiuWs14WO2TWp2EHtaX7a63dqrklk-xrjaZMrcPhpX4hkZw803SQx5HpGc-7VYBX8l82XlMZg";
         const expectedJwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.-DprLrW2OyqiAFiuWs14WO2TWp2EHtaX7a63dqrklk-xrjaZMrcPhpX4hkZw803SQx5HpGc-7VYBX8l82XlMZg";
 
-        const returnedJwt = jwtUtilAuth.assembleJwt( header, payload, signature );
+        const returnedJwt = jwtUtilAuth._assembleJwt( header, payload, signature );
         assert.deepStrictEqual( returnedJwt, expectedJwt );
     } );
 
@@ -21,7 +21,7 @@ describe( 'JwtUtilAuth test', function () {
         const payloadExpected = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0";
         const signatureExpected = "-DprLrW2OyqiAFiuWs14WO2TWp2EHtaX7a63dqrklk-xrjaZMrcPhpX4hkZw803SQx5HpGc-7VYBX8l82XlMZg";
 
-        const { header, payload, signature } = jwtUtilAuth.splitJwtInToHeaderPayloadSignature( jwt );
+        const { header, payload, signature } = jwtUtilAuth._splitJwtInToHeaderPayloadSignature( jwt );
         assert.deepStrictEqual( header, headerExpected );
         assert.deepStrictEqual( payload, payloadExpected );
         assert.deepStrictEqual( signature, signatureExpected );
