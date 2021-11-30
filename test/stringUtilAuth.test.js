@@ -3,7 +3,7 @@ const { describe, it } = require( 'mocha' );
 const { stringUtilAuth } = require( '../index' );
 
 
-describe( 'ProcessJwt test', function () {
+describe( 'StringUtilAuth test', function () {
     it( 'makeStringUrlSafe returns url safe string', function ( done ) {
         const urlUnsafeString = "eyJhbGciOiJzaGE1MTIiL/CJ0e+XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz===";
         const urlSafeString = "eyJhbGciOiJzaGE1MTIiL_CJ0e-XAiOiJKV1QifQ.eyJpZkkCI6IjEyMz";
