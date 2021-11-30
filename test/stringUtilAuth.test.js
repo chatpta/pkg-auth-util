@@ -65,4 +65,33 @@ describe( 'ProcessJwt test', function () {
         assert.deepStrictEqual( expectedObject, returnedObject );
         done();
     } );
+
+    it( 'objectToBase64UrlSafeString returns url safe base64 string', function ( done ) {
+        const object = {
+            header: {
+                alg: "HS512",
+                typ: "JWT"
+            }
+        };
+        const expectedBase64String = "eyJoZWFkZXIiOnsiYWxnIjoiSFM1MTIiLCJ0eXAiOiJKV1QifX0";
+
+        const returnedBase64String = stringUtilAuth.objectToBase64UrlSafeString( object );
+        assert.deepStrictEqual( returnedBase64String, expectedBase64String );
+        done();
+    } );
+
+
+    it( 'urlSafeBase64ToObject returns object', function ( done ) {
+        const base64String = "eyJoZWFkZXIiOnsiYWxnIjoiSFM1MTIiLCJ0eXAiOiJKV1QifX0";
+        const expectedObject = {
+            header: {
+                alg: "HS512",
+                typ: "JWT"
+            }
+        };
+
+        const returnedObject = stringUtilAuth.urlSafeBase64ToObject( base64String );
+        assert.deepStrictEqual( returnedObject, expectedObject );
+        done();
+    } );
 } );
