@@ -6,52 +6,27 @@ This is a collection of utility functions for use in authentication
 
 ### Main functions
 
-####Constructor takes default values object
+Create jwt
 
 ```js
-const defaultValues = {
-    defaultAlgorithm: 'sha512',
-    defaultSecret: 'dev-secret',
-    defaultOutputType: 'base64'
-};
-
-const authUtil = new AuthUtil(defaultValues);
-
+const jwt = createSignedJwtFromObject( headerObject, payloadObject, privateKey );
 ```
 
-####Creates hash of password -> returns string 
-- this string contains $algorithm.hash.salt
+Verify jwt signature returns ```true``` or ```false```
 
 ```js
-_createPasswordHash( password, secretKey, algorithm, outputType )
+const isVerified = verifyJwtSignature( jwt, publicKey );
 ```
 
-####Verify hash -> returns true or false
-- Password: user password
-- passwordHash: hash stored in the database as it is -> created by createPasswordHash() function
-- secretKey: optional key, if different then the key used at initialization
+Create password hash to save in database
 
 ```js
-verifyPasswordHash(password, passwordHash, secretKey)
+const hash = createPasswordHashWithRandomSalt( password, secret, algorithm );
 ```
 
-####Create JWT -> returns url safe jwt string
-- This string follows jwt specification
+Create another password hash based on saved hash to compare.
 
 ```js
-createJWT(header, payload, key)
+const hashForLogin = createPasswordHashBasedOnSavedAlgorithmSalt( passwordForLogin, savedPasswordHash, secret );
 ```
 
-#### verify JWT signatures -> returns true or false
-- Returns true or false
-
-```js
-verifySignatureJWT(jwt, key)
-```
-
-####read JWT -> return object containing header, payload, signature
-- Returns object containing { header: {}, payload: {} }
-
-```js
-readJWT(jwt)
-```
