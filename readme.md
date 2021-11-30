@@ -23,7 +23,7 @@ const authUtil = new AuthUtil(defaultValues);
 - this string contains $algorithm.hash.salt
 
 ```js
-createPasswordHash(password, secretKey, algorithm, outputType)
+_createPasswordHash( password, secretKey, algorithm, outputType )
 ```
 
 ####Verify hash -> returns true or false

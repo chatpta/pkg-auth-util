@@ -9,7 +9,7 @@ describe( 'PwdUtilAuth test', function () {
         const saltBase64 = 'c2hhMjU2';
         const expectedHash = "$1$c2hhMjU2$c2hhMjU2$c2hhMjU2$";
 
-        const returnedHash = pwdUtilAuth.assemblePasswordHash( algorithmBase64, hashBase64, saltBase64 );
+        const returnedHash = pwdUtilAuth._assemblePasswordHash( algorithmBase64, hashBase64, saltBase64 );
 
         assert.deepStrictEqual( returnedHash, expectedHash );
     } );
@@ -19,7 +19,7 @@ describe( 'PwdUtilAuth test', function () {
         const hashBase64 = 'c2hhMjU';
         const saltBase64 = 'c2hhMjU2';
 
-        const { version, alg, hash, salt } = pwdUtilAuth.disassemblePasswordHash( savedHash );
+        const { version, alg, hash, salt } = pwdUtilAuth._disassemblePasswordHash( savedHash );
 
         assert.deepStrictEqual( salt, saltBase64 );
         assert.deepStrictEqual( hash, hashBase64 );
@@ -31,7 +31,7 @@ describe( 'PwdUtilAuth test', function () {
         const algorithm = 'sha512';
         const salt = "6h29BnpUkqfrmtnY1xUrAGZcpcAl5cUEJ4Qjj+BGXbo=";
         const expectedHash = "$1$c2hhNTEy$SOk/04Wn/ce1YIXHlUIqt5SgsuCCLIFjxpzHloVSxFh/z8JuLFshAaGNCkIRf47QSPCOJpkJ476N2eq1Yg1+yg==$6h29BnpUkqfrmtnY1xUrAGZcpcAl5cUEJ4Qjj+BGXbo=$";
-        const hash = pwdUtilAuth.createPasswordHash( password, secret, salt, algorithm );
+        const hash = pwdUtilAuth._createPasswordHash( password, secret, salt, algorithm );
 
         assert.deepStrictEqual( hash, expectedHash );
     } );
