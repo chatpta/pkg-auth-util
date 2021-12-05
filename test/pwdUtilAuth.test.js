@@ -1,6 +1,6 @@
 const assert = require( 'assert' ).strict;
 const { describe, it } = require( 'mocha' );
-const { pwdUtilAuth } = require( '../index' );
+const pwdUtilAuth = require( '../lib/pwdUtilAuth' );
 
 describe( 'PwdUtilAuth test', function () {
     it( 'assemblePasswordHash called with algorithmBase64, hashBase64, saltBase64 returns password hash', function () {

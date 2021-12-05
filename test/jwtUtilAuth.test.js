@@ -1,6 +1,6 @@
 const assert = require( 'assert' ).strict;
 const { describe, it } = require( 'mocha' );
-const { jwtUtilAuth } = require( '../index' );
+const jwtUtilAuth = require( '../lib/jwtUtilAuth' );
 const keys = require( './keys' );
 
 
