@@ -26,11 +26,11 @@ describe( 'PwdUtilAuth test', function () {
     } );
 
     it( 'createPasswordHash called with save hash', function () {
-        const password = "mySecretPassword";
-        const secret = 'bigSecret*2';
+        const password = "bigSecret*2";
+        const secret = '240gTxVT2KnXOP4W6OdFkSEsdDWLqhLO2OP68o';
         const algorithm = 'sha512';
         const salt = "6h29BnpUkqfrmtnY1xUrAGZcpcAl5cUEJ4Qjj+BGXbo=";
-        const expectedHash = "$1$c2hhNTEy$oYzWBDCH64ZSqYgtLjRJpkcd/n9wgi6J/vCzJyb/iwAUGR5vI3H21CT+WLdbk2V7EhluyXBm+ga3MITjGgCfQQ==$6h29BnpUkqfrmtnY1xUrAGZcpcAl5cUEJ4Qjj+BGXbo=$";
+        const expectedHash = "$1$c2hhNTEy$rNPXY0aVOYsdenIAWdfxDL6d6247s+ScI9kcDvEBkipNo7S9QDy6utTqTcQLY3+tufc0f7AvmdocotW7bDIyYA==$6h29BnpUkqfrmtnY1xUrAGZcpcAl5cUEJ4Qjj+BGXbo=$";
         const hash = pwdUtilAuth._createPasswordHash( password, secret, salt, algorithm );
 
         assert.deepStrictEqual( hash, expectedHash );
