@@ -1,6 +1,6 @@
 {
   "name": "@chatpta/auth-util",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "repository": "https://github.com/chatpta/auth-util",
   "description": "Auth utility functions",
   "main": "index.js",
