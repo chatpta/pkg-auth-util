@@ -131,8 +131,8 @@ describe( "Lib controller jwt", function () {
         const roleTwo = "none";
 
         // Act
-        let hasRole = jwt.isJwtUserHasRole( req, role );
-        let hasRoleTwo = jwt.isJwtUserHasRole( req, roleTwo );
+        let hasRole = jwt.doesJwtUserHasRole( req, role );
+        let hasRoleTwo = jwt.doesJwtUserHasRole( req, roleTwo );
 
         // Assert
         assert( hasRole );
