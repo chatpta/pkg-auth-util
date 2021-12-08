@@ -1,7 +1,7 @@
 const assert = require( 'assert' ).strict;
 const { describe, it } = require( 'mocha' );
 const jwtUtilAuth = require( '../lib/jwtUtilAuth' );
-const keys = require( './keys' );
+const keys = require( './keys/keys' );
 
 
 describe( 'JwtUtilAuth test', function () {

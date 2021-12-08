@@ -1,7 +1,7 @@
 const assert = require( 'assert' ).strict;
 const { describe, it } = require( 'mocha' );
 const cryptoUtilAuth = require( '../lib/cryptoUtilAuth' );
-const keys = require( './keys' );
+const keys = require( './keys/keys' );
 
 
 describe( 'CryptoUtilAuth test', function () {
