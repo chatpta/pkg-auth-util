@@ -18,10 +18,11 @@ module.exports = {
     jwtAsyncMiddleware: require( './lib/jwtAsyncMiddleware' ),
 
     jwtLib: {
-        validateAndExtractJwtObject: jwtLib.validateAndExtractJwtObject,
+        jwtClientId: jwtLib.jwtClientId,
         isJwtExpired: jwtLib.isJwtExpired,
+        verifyJwtAndRole: jwtLib.verifyJwtAndRole,
         doesJwtUserHasRole: jwtLib.doesJwtUserHasRole,
-        jwtClientId: jwtLib.jwtClientId
+        validateAndExtractJwtObject: jwtLib.validateAndExtractJwtObject,
     }
 };
 

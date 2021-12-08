@@ -21,13 +21,6 @@ describe( "Lib controller jwt", function () {
                 }
             }
         };
-        const res = {
-            send( message ) {
-                this.body = message
-            }
-        };
-        const next = () => {
-        }
 
         // Act
         const receivedJwt = await jwt._validateJwt( req );
@@ -142,12 +135,45 @@ describe( "Lib controller jwt", function () {
     it( "jwtClientId", async function () {
 
         // Arrange
-        const req = { jwt: { payload: { client_id: '8b0db877-a6b3-4a23-a493-e687915cdd87'} } };
+        const req = { jwt: { payload: { client_id: '8b0db877-a6b3-4a23-a493-e687915cdd87' } } };
 
         // Act
         let clientId = jwt.jwtClientId( req );
 
         // Assert
         assert.deepStrictEqual( clientId, '8b0db877-a6b3-4a23-a493-e687915cdd87' );
+    } );
+
+    it( "verifyJwtAndRole", async function () {
+
+        const validJwt = 'Bearer eyJhbGciOiJzaGE1MTIiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2Mzg3MjM1ODkyOTYsImNsaWVudF9pZCI6ImRhZDZlYjZhLWQwMGYtNDZhNS04N2Y2LWY4MDEwNGMzYTUzOCIsInJvbGVzIjpbImFkbWluIl19.Pt3dA-aOpER4ykEVDbzvJe92uIurz0OSOi3Zd2UjWkexUeFIbW_ID5RlCs47VI0UzZMyCTlNvkMGUA-1aCtN3y_IR2PPUdd51t9F3hTeH5XcqInJpG40wc4aw8XKLm1QG6aCw5HoLHuAxd5oc9cqU1ZuF4LsMpTwr-pJNdjEZug';
+
+        // Arrange
+        const req = {
+            get( header ) {
+                if ( header === "Authorization" ) {
+                    return validJwt;
+                }
+            }
+        };
+
+        const res = {
+            send( message ) {
+                this.body = message
+            }
+        };
+        const next = () => {
+        }
+
+        function throwUsedTokenError() {
+            throw new Error( "Used_Token" );
+        }
+
+        // Act
+        const jwtMiddleware = jwt.verifyJwtAndRole( "admin", publicKey, throwUsedTokenError );
+        await jwtMiddleware( req, res, next );
+
+        // Assert
+        assert.deepStrictEqual( req.jwt.payload.roles[ 0 ], "admin" );
     } );
 } );
