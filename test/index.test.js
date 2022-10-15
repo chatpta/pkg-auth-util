@@ -4,7 +4,7 @@ const { jwtUtilAuth, pwdUtilAuth, strEncryptUtil } = require( '../index' );
 const keys = require( './keys/keys' );
 
 
-describe( 'JwtUtilAuth', function () {
+describe( 'Index/JwtUtilAuth', function () {
 
     it( 'createSignedJwtFromObject returns base64 url safe jwt', function () {
         const header = {
@@ -52,7 +52,7 @@ describe( 'JwtUtilAuth', function () {
     } );
 } );
 
-describe( 'PwdUtilAuth', function () {
+describe( 'Index/PwdUtilAuth', function () {
 
     it( 'createPasswordHashWithRandomSalt called with save hash', function () {
         const password = "mySecretPassword";
@@ -75,9 +75,9 @@ describe( 'PwdUtilAuth', function () {
     } );
 } );
 
-describe( 'strEncryptUtil', function () {
+describe( 'Index/strEncryptUtil', function () {
 
-    it( 'asymmetricEncryptString, asymmetricDecryptString', function () {
+    it( 'encryptByPrivateKey, decryptByPublicKey', function () {
         const textToEncrypt = 'Asymmetric encryption';
         const encryptionConfigObj = {
             cipherAlgorithm: "aes-256-cbc",
@@ -103,7 +103,7 @@ describe( 'strEncryptUtil', function () {
     } );
 
 
-    it( 'symmetricEncryptString, symmetricDecryptString', function () {
+    it( 'encryptByKey, decryptByKey', function () {
         const textToEncrypt = 'This is some text for encryption';
         const encryptConfigObj = {
             cipherAlgorithm: "aes-256-cbc",
