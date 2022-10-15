@@ -80,15 +80,17 @@ describe( 'strEncryptUtil', function () {
     it( 'asymmetricEncryptString, asymmetricDecryptString', function () {
         const textToEncrypt = 'This is some text for encryption';
         const encryptionConfigObj = {
-            cypherAlgorithm: "",
-            encryptionKey: "",
-            encryptionOutputCoding: ""
+            cipherAlgorithm: "aes-192-cbc",
+            encryptionKey: keys.privateKey,
+            encryptionInputEncoding: "utf8",
+            encryptionOutputEncoding: "base64"
         }
 
         const decryptionConfigObj = {
-            cypherAlgorithm: "",
-            encryptionKey: "",
-            encryptionOutputCoding: ""
+            cipherAlgorithm: "aes-192-cbc",
+            encryptionKey: keys.publicKey,
+            encryptionInputEncoding: "utf8",
+            encryptionOutputEncoding: "base64"
         }
 
         const encryptedString = strEncryptUtil.asymmetricEncryptString( encryptionConfigObj, textToEncrypt );
@@ -102,9 +104,10 @@ describe( 'strEncryptUtil', function () {
     it( 'symmetricEncryptString, symmetricDecryptString', function () {
         const textToEncrypt = 'This is some text for encryption';
         const encryptConfigObj = {
-            cypherAlgorithm: "",
-            encryptionKey: "",
-            encryptionOutputCoding: ""
+            cipherAlgorithm: "aes-192-cbc",
+            encryptionKey: keys.privateKey,
+            encryptionInputEncoding: "utf8",
+            encryptionOutputEncoding: "base64"
         }
 
         const encryptedString = strEncryptUtil.symmetricEncryptString( encryptConfigObj, textToEncrypt );
