@@ -79,6 +79,7 @@ describe( 'Index/strEncryptUtil', function () {
 
     it( 'encryptByPrivateKey, decryptByPublicKey', function () {
         const textToEncrypt = 'Asymmetric encryption';
+        const expectedEncryptedString = "VtwwLocyYdCreTBRifUmFuLRQ3Lrmw0RxDEN9zQh9lTJ2+6K/iLj7F5TDqm10hIKtfeajacs5HgEPGLb4whSpy7ggMtCNZQoujJNElNq2d7TScquYWi34cGlURzNTIUqC66afYYF2djq1QNVkWMzrnLMztrHem09+VlmA+eGLdc=";
         const encryptionConfigObj = {
             cipherAlgorithm: "aes-256-cbc",
             keyLength: 32,
@@ -87,6 +88,14 @@ describe( 'Index/strEncryptUtil', function () {
             encryptedTextEncoding: "base64"
         }
 
+        const encryptedString = strEncryptUtil.encryptByPrivateKey( encryptionConfigObj, textToEncrypt );
+
+        assert.deepStrictEqual( encryptedString, expectedEncryptedString );
+    } );
+
+    it( 'encryptByPrivateKey, decryptByPublicKey', function () {
+        const inputEncryptedString = "VtwwLocyYdCreTBRifUmFuLRQ3Lrmw0RxDEN9zQh9lTJ2+6K/iLj7F5TDqm10hIKtfeajacs5HgEPGLb4whSpy7ggMtCNZQoujJNElNq2d7TScquYWi34cGlURzNTIUqC66afYYF2djq1QNVkWMzrnLMztrHem09+VlmA+eGLdc=";
+        const expectedText = 'Asymmetric encryption';
         const decryptionConfigObj = {
             cipherAlgorithm: "aes-256-cbc",
             keyLength: 32,
@@ -95,16 +104,15 @@ describe( 'Index/strEncryptUtil', function () {
             encryptedTextEncoding: "base64"
         }
 
-        const encryptedString = strEncryptUtil.encryptByPrivateKey( encryptionConfigObj, textToEncrypt );
+        const decryptedString = strEncryptUtil.decryptByPublicKey( decryptionConfigObj, inputEncryptedString );
 
-        const decryptedString = strEncryptUtil.decryptByPublicKey( decryptionConfigObj, encryptedString );
-
-        assert.deepStrictEqual( decryptedString, textToEncrypt );
+        assert.deepStrictEqual( decryptedString, expectedText );
     } );
 
 
     it( 'encryptByKey, decryptByKey', function () {
         const textToEncrypt = 'This is some text for encryption';
+        const expectedEncryptedString = "/RMgsfS/ANEngXOwjFDYqxutOLnaY7XxDiJK403KZTcp8D76qPzwUYcYAF+lle4I";
         const encryptConfigObj = {
             cipherAlgorithm: "aes-256-cbc",
             keyLength: 32,
@@ -115,8 +123,22 @@ describe( 'Index/strEncryptUtil', function () {
 
         const encryptedString = strEncryptUtil.encryptByKey( encryptConfigObj, textToEncrypt );
 
+        assert.deepStrictEqual( encryptedString, expectedEncryptedString );
+    } );
+
+    it( 'encryptByKey, decryptByKey', function () {
+        const encryptedString = "/RMgsfS/ANEngXOwjFDYqxutOLnaY7XxDiJK403KZTcp8D76qPzwUYcYAF+lle4I";
+        const expectedText = 'This is some text for encryption';
+        const encryptConfigObj = {
+            cipherAlgorithm: "aes-256-cbc",
+            keyLength: 32,
+            encryptionKey: keys.privateKey,
+            plainTextEncoding: "utf8",
+            encryptedTextEncoding: "base64"
+        }
+
         const decryptedString = strEncryptUtil.decryptByKey( encryptConfigObj, encryptedString );
 
-        assert.deepStrictEqual( decryptedString, textToEncrypt );
+        assert.deepStrictEqual( decryptedString, expectedText );
     } );
 } );
