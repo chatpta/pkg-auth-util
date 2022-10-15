@@ -15,10 +15,10 @@ module.exports = {
     },
 
     strEncryptUtil: {
-        asymmetricEncryptString: strEncryptUtil.asymmetricEncryptString,
-        asymmetricDecryptString: strEncryptUtil.asymmetricDecryptString,
-        symmetricEncryptString: strEncryptUtil.symmetricEncryptString,
-        symmetricDecryptString: strEncryptUtil.symmetricDecryptString
+        encryptByPrivateKey: strEncryptUtil.encryptByPrivateKey,
+        decryptByPublicKey: strEncryptUtil.decryptByPublicKey,
+        encryptByKey: strEncryptUtil.encryptByKey,
+        decryptByKey: strEncryptUtil.decryptByKey
     },
 
     stringUtilAuth: require( './lib/stringUtilAuth' ),

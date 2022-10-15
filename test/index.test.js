@@ -78,24 +78,24 @@ describe( 'PwdUtilAuth', function () {
 describe( 'strEncryptUtil', function () {
 
     it( 'asymmetricEncryptString, asymmetricDecryptString', function () {
-        const textToEncrypt = 'This is some text for encryption';
+        const textToEncrypt = 'Asymmetric encryption';
         const encryptionConfigObj = {
             cipherAlgorithm: "aes-192-cbc",
-            encryptionKey: keys.privateKey,
+            privateKey: keys.privateKey,
             plainTextEncoding: "utf8",
             encryptedTextEncoding: "base64"
         }
 
         const decryptionConfigObj = {
             cipherAlgorithm: "aes-192-cbc",
-            encryptionKey: keys.publicKey,
+            publicKey: keys.publicKey,
             plainTextEncoding: "utf8",
             encryptedTextEncoding: "base64"
         }
 
-        const encryptedString = strEncryptUtil.asymmetricEncryptString( encryptionConfigObj, textToEncrypt );
+        const encryptedString = strEncryptUtil.encryptByPrivateKey( encryptionConfigObj, textToEncrypt );
 
-        const decryptedString = strEncryptUtil.asymmetricDecryptString( decryptionConfigObj, encryptedString );
+        const decryptedString = strEncryptUtil.decryptByPublicKey( decryptionConfigObj, encryptedString );
 
         assert.deepStrictEqual( decryptedString, textToEncrypt );
     } );
@@ -110,9 +110,9 @@ describe( 'strEncryptUtil', function () {
             encryptedTextEncoding: "base64"
         }
 
-        const encryptedString = strEncryptUtil.symmetricEncryptString( encryptConfigObj, textToEncrypt );
+        const encryptedString = strEncryptUtil.encryptByKey( encryptConfigObj, textToEncrypt );
 
-        const decryptedString = strEncryptUtil.symmetricDecryptString( encryptConfigObj, encryptedString );
+        const decryptedString = strEncryptUtil.decryptByKey( encryptConfigObj, encryptedString );
 
         assert.deepStrictEqual( decryptedString, textToEncrypt );
     } );
