@@ -77,7 +77,7 @@ describe( 'Index/PwdUtilAuth', function () {
 
 describe( 'Index/strEncryptUtil', function () {
 
-    it( 'encryptByPrivateKey, decryptByPublicKey', function () {
+    it( 'encryptByPrivateKey', function () {
         const textToEncrypt = 'Asymmetric encryption';
         const expectedEncryptedString = "VtwwLocyYdCreTBRifUmFuLRQ3Lrmw0RxDEN9zQh9lTJ2+6K/iLj7F5TDqm10hIKtfeajacs5HgEPGLb4whSpy7ggMtCNZQoujJNElNq2d7TScquYWi34cGlURzNTIUqC66afYYF2djq1QNVkWMzrnLMztrHem09+VlmA+eGLdc=";
         const encryptionConfigObj = {
@@ -93,7 +93,7 @@ describe( 'Index/strEncryptUtil', function () {
         assert.deepStrictEqual( encryptedString, expectedEncryptedString );
     } );
 
-    it( 'encryptByPrivateKey, decryptByPublicKey', function () {
+    it( 'decryptByPublicKey', function () {
         const inputEncryptedString = "VtwwLocyYdCreTBRifUmFuLRQ3Lrmw0RxDEN9zQh9lTJ2+6K/iLj7F5TDqm10hIKtfeajacs5HgEPGLb4whSpy7ggMtCNZQoujJNElNq2d7TScquYWi34cGlURzNTIUqC66afYYF2djq1QNVkWMzrnLMztrHem09+VlmA+eGLdc=";
         const expectedText = 'Asymmetric encryption';
         const decryptionConfigObj = {
@@ -110,7 +110,7 @@ describe( 'Index/strEncryptUtil', function () {
     } );
 
 
-    it( 'encryptByKey, decryptByKey', function () {
+    it( 'encryptByKey', function () {
         const textToEncrypt = 'This is some text for encryption';
         const expectedEncryptedString = "/RMgsfS/ANEngXOwjFDYqxutOLnaY7XxDiJK403KZTcp8D76qPzwUYcYAF+lle4I";
         const encryptConfigObj = {
@@ -126,7 +126,7 @@ describe( 'Index/strEncryptUtil', function () {
         assert.deepStrictEqual( encryptedString, expectedEncryptedString );
     } );
 
-    it( 'encryptByKey, decryptByKey', function () {
+    it( 'decryptByKey', function () {
         const encryptedString = "/RMgsfS/ANEngXOwjFDYqxutOLnaY7XxDiJK403KZTcp8D76qPzwUYcYAF+lle4I";
         const expectedText = 'This is some text for encryption';
         const encryptConfigObj = {
