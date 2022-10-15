@@ -77,7 +77,29 @@ describe( 'PwdUtilAuth', function () {
 
 describe( 'strEncryptUtil', function () {
 
-    it( 'asymmetricEncryptString', function () {
+    it( 'asymmetricEncryptString, asymmetricDecryptString', function () {
+        const textToEncrypt = 'This is some text for encryption';
+        const encryptionConfigObj = {
+            cypherAlgorithm: "",
+            encryptionKey: "",
+            encryptionOutputCoding: ""
+        }
+
+        const decryptionConfigObj = {
+            cypherAlgorithm: "",
+            encryptionKey: "",
+            encryptionOutputCoding: ""
+        }
+
+        const encryptedString = strEncryptUtil.asymmetricEncryptString( encryptionConfigObj, textToEncrypt );
+
+        const decryptedString = strEncryptUtil.asymmetricDecryptString( decryptionConfigObj, encryptedString );
+
+        assert.deepStrictEqual( decryptedString, textToEncrypt );
+    } );
+
+
+    it( 'symmetricEncryptString, symmetricDecryptString', function () {
         const textToEncrypt = 'This is some text for encryption';
         const encryptConfigObj = {
             cypherAlgorithm: "",
@@ -85,47 +107,10 @@ describe( 'strEncryptUtil', function () {
             encryptionOutputCoding: ""
         }
 
-        const hash = strEncryptUtil.asymmetricEncryptString( encryptConfigObj, textToEncrypt );
+        const encryptedString = strEncryptUtil.symmetricEncryptString( encryptConfigObj, textToEncrypt );
 
-        // assert.deepStrictEqual( hash.length > 40, true );
-    } );
+        const decryptedString = strEncryptUtil.symmetricDecryptString( encryptConfigObj, encryptedString );
 
-    it( 'asymmetricDecryptString', function () {
-        const textToDecrypt = 'This is some text for encryption';
-        const decryptConfigObj = {
-            cypherAlgorithm: "",
-            encryptionKey: "",
-            encryptionOutputCoding: ""
-        }
-
-        const hash = strEncryptUtil.asymmetricDecryptString( decryptConfigObj, textToDecrypt );
-
-        // assert.deepStrictEqual( hash, savedHash );
-    } );
-
-    it( 'symmetricEncryptString', function () {
-        const textToEncrypt = 'This is some text for encryption';
-        const encryptConfigObj = {
-            cypherAlgorithm: "",
-            encryptionKey: "",
-            encryptionOutputCoding: ""
-        }
-
-        const hash = strEncryptUtil.symmetricEncryptString( encryptConfigObj, textToEncrypt );
-
-        // assert.deepStrictEqual( hash.length > 40, true );
-    } );
-
-    it( 'symmetricDecryptString', function () {
-        const textToDecrypt = 'This is some text for encryption';
-        const decryptConfigObj = {
-            cypherAlgorithm: "",
-            encryptionKey: "",
-            encryptionOutputCoding: ""
-        }
-
-        const hash = strEncryptUtil.symmetricDecryptString( decryptConfigObj, textToDecrypt );
-
-        // assert.deepStrictEqual( hash, savedHash );
+        assert.deepStrictEqual( decryptedString, textToEncrypt );
     } );
 } );
