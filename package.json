@@ -15,7 +15,7 @@
   "author": "Chatpta team",
   "license": "ISC",
   "devDependencies": {
-    "mocha": "^9.1.3"
+    "mocha": "10.2.0"
   },
   "dependencies": {
   }
