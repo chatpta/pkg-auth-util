@@ -8,16 +8,17 @@ describe( 'Index/JwtUtilAuth', function () {
 
     it( 'createSignedJwtFromObject returns base64 url safe jwt', function () {
         const header = {
-            alg: "SHA256",
+            alg: "SHA512",
             typ: "JWT"
         }
         const payload = {
             "sub": "1234567890",
             "name": "John Doe",
-            "admin": true,
-            "iat": 1516239022
+            "iat": 1516239022,
+            "cpso": "81883",
+            "roles": ["ph", "ea"]
         }
-        const expectedJwt = "eyJhbGciOiJTSEEyNTYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.E7BtILiVDoQ96-LHKtOVk9h7RMCTEYbJcQ9t0AMq_LnKR9hlE5cX5pUTl0HSAqfe3vrBN3tXxK6Zrx9kFYabWbA1l3vzUJ1Yiy5MsTtVIgRm9vw1QwtqOlY3ea31gLuWsKnGoexS3ng04z_HxviDmB2UZAsGKphc2S5OLDav5IY";
+        const expectedJwt = "eyJhbGciOiJTSEE1MTIiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJjcHNvIjoiODE4ODMiLCJyb2xlcyI6WyJwaCIsImVhIl19.PWff8BvKP79ukuZrGEhyIw4HN86m99l4VZo9xL_Ul5EHQFC1RsEvxUig4z2sUZqAvQLcQjEhNR7hf0KkB7YeJTWZF4QLRX6GwC5SvE2kryrYSlZvop2SCbYdty38gzDw3xTdDzcJo0awE45Sk_ZlRnjgcDD-wXAW3i7ToXRcPxM";
 
         const createdJwt = jwtUtilAuth.createSignedJwtFromObject( header, payload, keys.privateKey );
 
@@ -25,7 +26,7 @@ describe( 'Index/JwtUtilAuth', function () {
     } );
 
     it( 'verifyJwtSignature returns true or false', function () {
-        const jwt = "eyJhbGciOiJTSEEyNTYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.E7BtILiVDoQ96-LHKtOVk9h7RMCTEYbJcQ9t0AMq_LnKR9hlE5cX5pUTl0HSAqfe3vrBN3tXxK6Zrx9kFYabWbA1l3vzUJ1Yiy5MsTtVIgRm9vw1QwtqOlY3ea31gLuWsKnGoexS3ng04z_HxviDmB2UZAsGKphc2S5OLDav5IY";
+        const jwt = "eyJhbGciOiJTSEE1MTIiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJjcHNvIjoiODE4ODMiLCJyb2xlcyI6WyJwaCIsImVhIl19.PWff8BvKP79ukuZrGEhyIw4HN86m99l4VZo9xL_Ul5EHQFC1RsEvxUig4z2sUZqAvQLcQjEhNR7hf0KkB7YeJTWZF4QLRX6GwC5SvE2kryrYSlZvop2SCbYdty38gzDw3xTdDzcJo0awE45Sk_ZlRnjgcDD-wXAW3i7ToXRcPxM";
 
         const isVerified = jwtUtilAuth.verifyJwtSignature( jwt, keys.publicKey );
 
@@ -33,16 +34,18 @@ describe( 'Index/JwtUtilAuth', function () {
     } );
 
     it( 'getHeaderPayloadFromJwt returns header, payload object', function () {
-        const jwt = "eyJhbGciOiJTSEEyNTYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.E7BtILiVDoQ96-LHKtOVk9h7RMCTEYbJcQ9t0AMq_LnKR9hlE5cX5pUTl0HSAqfe3vrBN3tXxK6Zrx9kFYabWbA1l3vzUJ1Yiy5MsTtVIgRm9vw1QwtqOlY3ea31gLuWsKnGoexS3ng04z_HxviDmB2UZAsGKphc2S5OLDav5IY";
+        const jwt = "eyJhbGciOiJTSEE1MTIiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJjcHNvIjoiODE4ODMiLCJyb2xlcyI6WyJwaCIsImVhIl19.PWff8BvKP79ukuZrGEhyIw4HN86m99l4VZo9xL_Ul5EHQFC1RsEvxUig4z2sUZqAvQLcQjEhNR7hf0KkB7YeJTWZF4QLRX6GwC5SvE2kryrYSlZvop2SCbYdty38gzDw3xTdDzcJo0awE45Sk_ZlRnjgcDD-wXAW3i7ToXRcPxM"
+
         const expectedHeader = {
-            alg: "SHA256",
+            alg: "SHA512",
             typ: "JWT"
         }
         const expectedPayload = {
-            "sub": "1234567890",
-            "name": "John Doe",
-            "admin": true,
-            "iat": 1516239022
+            sub: '1234567890',
+            name: 'John Doe',
+            iat: 1516239022,
+            cpso: "81883",
+            roles: [ "ph", "ea" ]
         }
 
         const { header, payload } = jwtUtilAuth.getHeaderPayloadFromJwt( jwt );
