@@ -1,6 +1,6 @@
 {
   "name": "@chatpta/auth-util",
-  "version": "3.0.20",
+  "version": "3.0.21",
   "repository": "https://github.com/chatpta/pkg-auth-util",
   "description": "Auth utility functions",
   "main": "index.js",
